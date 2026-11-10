@@ -1,6 +1,8 @@
 # Basic style (1 / 2 / 3)
 
-Satu skill Claude Code berisi tiga gaya video pendek. Kamu cukup kirim **VO ElevenLabs + script + brief visual**, lalu pilih gayanya.
+Satu skill Claude Code berisi tiga gaya video pendek. Kamu cukup kirim **VO ElevenLabs + script + brief visual**, lalu
+pilih gayanya. Repo ini juga berisi **jkson style**, skill kedua di bagian bawah README: animasi kartun "What If"
+15-25 detik dari satu baris topik.
 
 | Gaya | Tampilan | Rasio |
 |---|---|---|
@@ -11,10 +13,15 @@ Satu skill Claude Code berisi tiga gaya video pendek. Kamu cukup kirim **VO Elev
 ## Pasang
 
 ```bash
+# Basic style (1 / 2 / 3) - kartun peta chibi, tinta malam, atau 3D sinematik
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git ~/.claude/skills/basic-style
+
+# jkson style - animasi kartun stick-figure "What If" (Remotion + ElevenLabs)
+git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git /tmp/styles-repo
+cp -r /tmp/styles-repo/styles/jkson-style ~/.claude/skills/jkson-style && rm -rf /tmp/styles-repo
 ```
 
-Folder tujuannya harus bernama `basic-style`. Mulai chat baru setelah memasang.
+Nama folder tujuannya harus benar: `basic-style` untuk Basic style, dan `jkson-style` untuk jkson style (jangan meng-clone seluruh repo langsung sebagai `jkson-style`, karena `SKILL.md` di akar repo milik Basic style). Mulai chat baru setelah memasang.
 
 ## Cara pakai
 
