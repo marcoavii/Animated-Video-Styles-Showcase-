@@ -58,3 +58,22 @@ Video MP4, file VO, dan audio tidak disimpan di repo ini.
 ## Lisensi font
 
 `styles/basic-style-2/kit/fonts/` berisi Rubik dan Black Ops One (SIL Open Font License) serta Permanent Marker (Apache License 2.0). `styles/basic-style-3/kit/scenes/fonts/` berisi Plus Jakarta Sans (SIL Open Font License). Semua dari paket Fontsource.
+
+## jkson style (What If animation)
+
+Skill kedua di repo ini: animasi kartun stick-figure gaya channel "What If" yang meledak di YouTube Oktober 2026.
+Satu baris topik ("What if you could rewind 10 seconds?") masuk, episode jadi 15-25 detik keluar: script di atas
+formula tujuh beat What If, voice ElevenLabs, storyboard yang dicek sendiri sebelum animasi, setiap frame digambar
+sebagai SVG yang dirender Remotion, sound design disintesis, master ke -14 LUFS.
+
+- **Isi**: `styles/jkson-style/` — `SKILL.md` (alur kerja 8 langkah), `references/` (formula, look, kit, sound, traps), `scripts/` (voice, plan, stills, board, sfx, mixcheck, motiongrid, master), `studio/` (proyek Remotion + dua episode contoh: `rewind` dan `copy-paste`), `opencode/commands/what-if.md`
+- **Pasang**:
+
+```bash
+git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git
+cp -r Animated-Video-Styles-Showcase-/styles/jkson-style ~/.config/opencode/skills/jkson-style
+```
+
+- **Pakai**: tulis "jkson style: what if ..." (atau `/jkson <topik>`) di OpenCode — skill terdeteksi otomatis
+- **Kebutuhan**: Python 3.9+ dengan numpy dan Pillow, Node 18+, ffmpeg dan ffprobe di PATH, dan `ELEVENLABS_API_KEY` di environment atau `.env` (tanpa VO pakai key, tanpa kredensial ElevenLabs)
+- Video MP4, file VO, dan audio SFX tidak disimpan di repo ini; `studio/library/sfx/` diisi ulang otomatis oleh `sfx.py` (cached by prompt), audio bisa juga diunduh ulang dari contoh yang ada.
