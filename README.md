@@ -11,7 +11,7 @@ Satu skill Claude Code berisi tiga gaya video pendek. Kamu cukup kirim **VO Elev
 ## Pasang
 
 ```bash
-git clone https://github.com/marcoavii/Basic-Style.git ~/.claude/skills/basic-style
+git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git ~/.claude/skills/basic-style
 ```
 
 Folder tujuannya harus bernama `basic-style`. Mulai chat baru setelah memasang.
