@@ -1,4 +1,4 @@
-# Basic style (1 / 2 / 3)
+# Basic style
 
 Satu skill Claude Code berisi tiga gaya video pendek. Kamu cukup kirim **VO ElevenLabs + script + brief visual**, lalu
 pilih gayanya. Repo ini juga berisi **jkson style**, skill kedua di bagian bawah README: animasi kartun "What If"
@@ -9,6 +9,7 @@ pilih gayanya. Repo ini juga berisi **jkson style**, skill kedua di bagian bawah
 | **Basic style 1** | Peta kuno parchment + karakter chibi, caption highlight kuning | 9:16, 30 FPS |
 | **Basic style 2** | Kartun tinta tebal malam berbulan + gag UI game, caption per kata | 9:16 / 16:9, 60 FPS |
 | **Basic style 3** | Kartun 3D sinematik three.js, whip + motion blur, teks 3D memantul | 9:16 / 16:9, 60 FPS |
+| **jkson style** | animasi kartun stick-figure "What If" (Remotion + ElevenLabs) | 9:16 / 16:9, 60 FPS |
 
 ## Pasang
 
