@@ -1,0 +1,12 @@
+{
+  "cuts": [
+    {"scene":"intro","at":[null,0,0],"type":"open"},
+    {"scene":"field","at":["b1",0,-0.1],"type":"whip","dir":"left"}
+  ],
+  "cues": {
+    "boom":["b1",3,0.1],
+    "bigBoom":["b1",3,1.0],
+    "pill":["b1",3,1.5],
+    "end":["b1",3,3.8]
+  }
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Basic style 3</title>
+<link rel="icon" href="data:,">
+<script type="importmap">
+{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }
+</script>
+<style>
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 800; src: url("./fonts/plus-jakarta-sans-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 700; src: url("./fonts/plus-jakarta-sans-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 500; src: url("./fonts/plus-jakarta-sans-latin-500-normal.woff2") format("woff2"); }
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: var(--w); height: var(--h); overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; }
+  /* Caption: 1-2 words, heavy white with tight dark edge, same placement logic as the reference (centre, lower third). */
+  #cap {
+    position: absolute; left: 0; right: 0; top: 73.5%; text-align: center; white-space: nowrap;
+    font-family: "Plus Jakarta Sans"; font-weight: 800;
+    font-size: calc(var(--h) * 0.062); letter-spacing: -0.02em; line-height: 1;
+    color: #fff; -webkit-text-stroke: calc(var(--h) * 0.0068) #120e0a; paint-order: stroke fill;
+    text-shadow: 0 calc(var(--h) * 0.0035) calc(var(--h) * 0.012) rgba(0,0,0,.55);
+  }
+  /* 9:16: same placement and weight as the reference caption */
+  .portrait #cap { top: 68.5%; font-size: calc(var(--h) * 0.0375); -webkit-text-stroke: calc(var(--h) * 0.0042) #120e0a; }
+</style>
+</head>
+<body>
+  <div id="stage"><canvas id="gl"></canvas><div id="cap"></div></div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

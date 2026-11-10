@@ -1,0 +1,9 @@
+{
+  "language": "id",
+  "note": "say = exact words spoken in the VO; show = caption override; *word* marks a red word; hold = seconds of silence added after this phrase.",
+  "phrases": [
+    {"id":"a1","say":"Tulis kalimat pertama di sini."},
+    {"id":"a2","say":"Lalu kalimat *kedua.*"},
+    {"id":"b1","say":"Kalimat untuk shot kedua,","hold":0.8}
+  ]
+}

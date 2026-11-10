@@ -1,0 +1,7 @@
+<!doctype html><html><body><pre id="o">loading</pre>
+<script type="module">
+window.log=(m)=>{document.getElementById('o').textContent+='\n'+m};
+window.decode=async()=>{const ab=await (await fetch('vo.mp3')).arrayBuffer();const ctx=new AudioContext({sampleRate:16000});const b=await ctx.decodeAudioData(ab);window.pcm=b.getChannelData(0);return b.duration};
+window.loadW=async(model)=>{const T=await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2');window.T=T;window.asr=await T.pipeline('automatic-speech-recognition',model,{dtype:'q8',device:'wasm',progress_callback:p=>{if(p.status==='progress'&&Math.round(p.progress)%25===0)log(p.file+' '+Math.round(p.progress))}});return 'ok'};
+window.run=async(opts)=>{window.res=null;window.res=await asr(pcm,opts);return 'done'};
+</script></body></html>

@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;1,500&family=Roboto:wght@500;700&display=swap">
+</head><body style="margin:0;background:#111">
+<canvas id="c" width="1080" height="1920" style="height:96vh;display:block;margin:auto"></canvas>
+<script type="module">
+import * as F from './film.js';
+const cvs = document.getElementById('c'), ctx = cvs.getContext('2d');
+window.F = F;
+window.ready = F.init();
+const post = async (name, body, raw) => fetch('/save?name=' + name + (raw ? '&raw=1' : ''), { method: 'POST', body });
+window.still = async (t, name) => { await window.ready; F.renderFrame(ctx, t); await post(name, cvs.toDataURL('image/jpeg', .85)); return name; };
+// contact sheet of several times
+window.sheet = async (name, times, cols = 4, w = 360) => {
+  await window.ready; const h = Math.round(w * 1920 / 1080), rows = Math.ceil(times.length / cols), s = document.createElement('canvas');
+  s.width = cols * w; s.height = rows * (h + 24); const g = s.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, s.width, s.height);
+  for (let i = 0; i < times.length; i++) { F.renderFrame(ctx, times[i]); const x = (i % cols) * w, y = Math.floor(i / cols) * (h + 24); g.drawImage(cvs, x, y + 24, w, h); g.fillStyle = '#ff0'; g.font = 'bold 18px monospace'; g.fillText(times[i].toFixed(2) + 's', x + 4, y + 18); }
+  await post(name, s.toDataURL('image/jpeg', .82)); return name;
+};
+window.encode = async (name = 'final.mp4') => {
+  await window.ready;
+  const { Muxer, ArrayBufferTarget } = await import('https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/+esm');
+  const ab = await (await fetch('vo.mp3')).arrayBuffer(), actx = new OfflineAudioContext(1, 44100, 44100), buf = await actx.decodeAudioData(ab), pcm = buf.getChannelData(0);
+  // mix synthesized SFX under the VO, soft-limiting only the very top
+  if (F.sfx) { const s = F.sfx(44100, pcm.length, pcm); let peak = 0; for (let i = 0; i < pcm.length; i++) { const v = pcm[i] + s[i], a = Math.abs(v); pcm[i] = a < .9 ? v : Math.sign(v) * (.9 + .1 * Math.tanh((a - .9) / .1)); peak = Math.max(peak, Math.abs(pcm[i])); } window.mixPeak = peak; }
+  const muxer = new Muxer({ target: new ArrayBufferTarget(), video: { codec: 'avc', width: 1080, height: 1920, frameRate: 30 }, audio: { codec: 'aac', numberOfChannels: 1, sampleRate: 44100 }, fastStart: 'in-memory' });
+  const ve = new VideoEncoder({ output: (ch, m) => muxer.addVideoChunk(ch, m), error: e => window.encErr = String(e) });
+  ve.configure({ codec: 'avc1.640028', width: 1080, height: 1920, bitrate: 9e6, framerate: 30, avc: { format: 'avc' } });
+  const ae = new AudioEncoder({ output: (ch, m) => muxer.addAudioChunk(ch, m), error: e => window.encErr = String(e) });
+  ae.configure({ codec: 'mp4a.40.2', sampleRate: 44100, numberOfChannels: 1, bitrate: 160000 });
+  for (let i = 0; i < pcm.length; i += 4410) { const n = Math.min(4410, pcm.length - i); ae.encode(new AudioData({ format: 'f32-planar', sampleRate: 44100, numberOfFrames: n, numberOfChannels: 1, timestamp: Math.round(i / 44100 * 1e6), data: pcm.slice(i, i + n) })); }
+  const N = Math.ceil(buf.duration * 30);
+  for (let i = 0; i < N; i++) {
+    F.renderFrame(ctx, i / 30);
+    const vf = new VideoFrame(cvs, { timestamp: Math.round(i * 1e6 / 30), duration: Math.round(1e6 / 30) });
+    ve.encode(vf, { keyFrame: i % 60 === 0 }); vf.close();
+    window.prog = i + '/' + N;
+    if (ve.encodeQueueSize > 6) await new Promise(r => ve.addEventListener('dequeue', r, { once: true }));
+    if (i % 15 === 0) await new Promise(r => setTimeout(r, 0));
+  }
+  await ve.flush(); await ae.flush(); muxer.finalize();
+  const out = muxer.target.buffer; window.prog = 'saving ' + out.byteLength;
+  await post(name, new Blob([out]), true); window.prog = 'done ' + out.byteLength; return out.byteLength;
+};
+</script></body></html>
