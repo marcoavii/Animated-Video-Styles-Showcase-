@@ -78,6 +78,23 @@ done you get:
 - `out/<slug>/<slug>-final.mp4`, the finished episode
 - `out/<slug>/storyboard.jpg`, the storyboard
 
+### Aspect ratio: 16:9 or 9:16
+
+Every episode can be mastered in two framings from the same storyboard:
+
+- **16:9** (1920x1080) — the default, the YouTube-defined frame
+- **9:16** (1080x1920) — the same episode re-framed as a centred vertical slice of the same animated world
+
+The vertical mode is a real re-frame, not a crop of the finished video: every frame is re-rendered at 1080x1920,
+each shot gets its own crop centre (written per shot in `episode.json` under `"refFrame"`, in world units, `0` =
+centre), and the HUD adapts to the taller canvas. Render it with:
+
+```bash
+python scripts/master.py <slug> --aspect 9x16
+```
+
+or let the skill pick when the request says "9:16" or "vertical".
+
 ### Try the examples first
 
 Run `npx remotion studio src/index.ts` and open either example. Both render straight away.

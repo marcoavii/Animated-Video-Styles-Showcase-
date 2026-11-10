@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, Audio, staticFile, useCurrentFrame } from 'remotion';
 import { clamp, lerp } from './anim';
+import { Aspect, CANVAS, setAspect, worldView, WORLD } from './canvas';
 import { KitDefs } from './kit';
 import { SetDefs } from './light';
 
@@ -28,6 +29,8 @@ export type Timeline = {
   shots: ShotInfo[];
   fx: Fx[];
   audio: { voice?: string; sfx?: string; music?: string; voiceVol?: number; sfxVol?: number; musicVol?: number };
+  /** In 9:16, each shot's crop centre on the world's x axis, in world units (0 = the frame's centre at 960). */
+  refFrame?: Record<string, number>;
 };
 
 /** What every shot receives: its own clock t, how long its clock runs (len), and the global frame f. */
@@ -82,8 +85,8 @@ const fxAt = (tl: Timeline, f: number) => {
 };
 
 /** Vignette and a fine grain that changes on twos, to take the vector edge off (the genre's finish). */
-const Grade: React.FC<{ f: number; grain: boolean; vignette: boolean }> = ({ f, grain, vignette }) => (
-  <svg width={1920} height={1080} viewBox="0 0 1920 1080" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+const Grade: React.FC<{ f: number; grain: boolean; vignette: boolean; w: number; h: number }> = ({ f, grain, vignette, w, h }) => (
+  <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
     <defs>
       <radialGradient id="epVig" cx="50%" cy="50%" r="75%">
         <stop offset="55%" stopColor="#000" stopOpacity={0} />
@@ -94,25 +97,37 @@ const Grade: React.FC<{ f: number; grain: boolean; vignette: boolean }> = ({ f, 
         <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0" />
       </filter>
     </defs>
-    {vignette ? <rect width="1920" height="1080" fill="url(#epVig)" /> : null}
-    {grain ? <rect width="1920" height="1080" filter="url(#epGrain)" /> : null}
+    {vignette ? <rect width={w} height={h} fill="url(#epVig)" /> : null}
+    {grain ? <rect width={w} height={h} filter="url(#epGrain)" /> : null}
   </svg>
 );
 
-/** One shot drawn in the shared defs (filters, gradients), in a 1920 x 1080 world. */
-export const ShotFrame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <svg width={1920} height={1080} viewBox="0 0 1920 1080">
+/** One shot drawn in the shared defs (filters, gradients), in the world's 1920 x 1080 coordinates; the composition
+ *  sees a strip of that world through its viewBox. */
+export const ShotFrame: React.FC<{ children: React.ReactNode; width?: number; height?: number; viewBox?: string }> = ({ children, width, height, viewBox }) => (
+  <svg width={width ?? 1920} height={height ?? 1080} viewBox={viewBox ?? '0 0 1920 1080'}>
     <KitDefs />
     <SetDefs />
     {children}
   </svg>
 );
 
-export type EpisodeProps = { timeline: Timeline; shots: ShotMap; looks?: Record<string, LookDef>; grain?: boolean; vignette?: boolean; bg?: string };
+export type EpisodeProps = {
+  timeline: Timeline;
+  shots: ShotMap;
+  looks?: Record<string, LookDef>;
+  grain?: boolean;
+  vignette?: boolean;
+  bg?: string;
+  /** In 9:16, each shot's crop centre on the world's x axis, in world units (0 = the frame's centre at 960). */
+  refFrame?: Record<string, number>;
+};
 
-export const Episode: React.FC<EpisodeProps> = ({ timeline: tl, shots, looks = {}, grain = true, vignette = true, bg = '#0E0C1E' }) => {
+export const Episode: React.FC<EpisodeProps & { aspect?: Aspect }> = ({ timeline: tl, shots, looks = {}, grain = true, vignette = true, bg = '#0E0C1E', refFrame, aspect = '16:9' }) => {
+  setAspect(aspect);
   const f = useCurrentFrame();
   const seg = segAt(tl, f);
+  const ref = refFrame ?? tl.refFrame ?? {};
   const Shot = shots[seg.shot];
   const info = tl.shots.find((s) => s.id === seg.shot);
   const run = lookRuns(tl).find((r) => f >= r.a && f < r.b);
@@ -121,14 +136,18 @@ export const Episode: React.FC<EpisodeProps> = ({ timeline: tl, shots, looks = {
   const jitter = def?.jitter && lv > 0 ? Math.sin(f * 13.7) * def.jitter * lv : 0;
   const { flash, x, y } = fxAt(tl, f);
   const A = tl.audio;
+  const view = worldView(960 + (ref[seg.shot] ?? 0));
+  const { width: W, height: H } = CANVAS();
   return (
     <AbsoluteFill style={{ backgroundColor: bg }}>
       <AbsoluteFill style={{ transform: `translate(${x + jitter}px, ${y}px) scale(${x || y ? 1.02 : 1})`, filter: def?.grade && lv > 0 ? def.grade(lv) : undefined }}>
-        <ShotFrame>{Shot ? <Shot t={clockAt(seg, f)} len={info?.len ?? seg.b - seg.a} f={f} /> : null}</ShotFrame>
+        <ShotFrame width={W} height={H} viewBox={`${view.x} 0 ${view.w} ${WORLD.h}`}>
+          {Shot ? <Shot t={clockAt(seg, f)} len={info?.len ?? seg.b - seg.a} f={f} /> : null}
+        </ShotFrame>
       </AbsoluteFill>
-      <Grade f={f} grain={grain} vignette={vignette} />
+      <Grade f={f} grain={grain} vignette={vignette} w={W} h={H} />
       {def?.Overlay && run ? (
-        <svg width={1920} height={1080} viewBox="0 0 1920 1080" style={{ position: 'absolute', inset: 0, opacity: lv }}>
+        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: 'absolute', inset: 0, opacity: lv }}>
           <def.Overlay f={f} lv={lv} p={clamp((f - run.a) / (run.b - run.a))} n={run.n} />
         </svg>
       ) : null}
@@ -141,24 +160,32 @@ export const Episode: React.FC<EpisodeProps> = ({ timeline: tl, shots, looks = {
 };
 
 /** The storyboard: frame i is shot i at its key frame, no audio, no look. Render it with scripts/stills.mjs. */
-export const Board: React.FC<{ timeline: Timeline; shots: ShotMap; grain?: boolean; vignette?: boolean; bg?: string }> = ({ timeline: tl, shots, grain = true, vignette = true, bg = '#0E0C1E' }) => {
+export const Board: React.FC<EpisodeProps & { aspect?: Aspect }> = ({ timeline: tl, shots, grain = true, vignette = true, bg = '#0E0C1E', refFrame, aspect = '16:9' }) => {
+  setAspect(aspect);
   const f = useCurrentFrame();
   const info = tl.shots[Math.min(f, tl.shots.length - 1)];
   const Shot = shots[info.id];
+  const ref = refFrame ?? tl.refFrame ?? {};
+  const view = worldView(960 + (ref[info.id] ?? 0));
+  const { width: W, height: H } = CANVAS();
   return (
     <AbsoluteFill style={{ backgroundColor: bg }}>
-      <ShotFrame>{Shot ? <Shot t={info.key} len={info.len} f={info.first + info.key} /> : null}</ShotFrame>
-      <Grade f={info.key} grain={grain} vignette={vignette} />
+      <ShotFrame width={W} height={H} viewBox={`${view.x} 0 ${view.w} ${WORLD.h}`}>
+        {Shot ? <Shot t={info.key} len={info.len} f={info.first + info.key} /> : null}
+      </ShotFrame>
+      <Grade f={info.key} grain={grain} vignette={vignette} w={W} h={H} />
     </AbsoluteFill>
   );
 };
 
-/** Bundle an episode for the registry: the main composition and its storyboard. */
+/** Bundle an episode for the registry: the film and its storyboard, each in 16:9 and in the 9:16 re-frame. */
 export const defineEpisode = (id: string, p: EpisodeProps) => ({
   id,
   total: p.timeline.total,
   shotCount: p.timeline.shots.length,
   Main: () => <Episode {...p} />,
-  Board: () => <Board timeline={p.timeline} shots={p.shots} grain={p.grain} vignette={p.vignette} bg={p.bg} />,
+  Board: () => <Board timeline={p.timeline} shots={p.shots} grain={p.grain} vignette={p.vignette} bg={p.bg} refFrame={p.refFrame} />,
+  MainV: () => <Episode {...p} aspect="9:16" />,
+  BoardV: () => <Board timeline={p.timeline} shots={p.shots} grain={p.grain} vignette={p.vignette} bg={p.bg} refFrame={p.refFrame} aspect="9:16" />,
 });
 export type EpisodeDef = ReturnType<typeof defineEpisode>;

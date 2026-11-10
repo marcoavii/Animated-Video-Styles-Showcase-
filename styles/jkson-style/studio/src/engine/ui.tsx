@@ -1,5 +1,6 @@
 import React from 'react';
 import { clamp, backOut, easeOut } from './anim';
+import { CANVAS, fitW, WORLD } from './canvas';
 import { C } from './rig';
 import { FONT } from './fonts';
 
@@ -71,8 +72,9 @@ export const HudChip: React.FC<{ x?: number; y?: number; f: number; label: strin
   );
 };
 
-/** A round dial with a readout: a stopwatch counting, a countdown, a battery. `p` is how full the ring is (0..1). */
-export const Dial: React.FC<{ x?: number; y?: number; p: number; readout: string; r?: number; size?: number }> = ({ x = 1720, y = 140, p, readout, r = 84, size = 40 }) => (
+/** A round dial with a readout: a stopwatch counting, a countdown, a battery. `p` is how full the ring is (0..1).
+ *  Defaults to the top-right corner of the output canvas (it adapts to the 9:16 re-frame). */
+export const Dial: React.FC<{ x?: number; y?: number; p: number; readout: string; r?: number; size?: number }> = ({ x = CANVAS().width - 200, y = 140, p, readout, r = 84, size = 40 }) => (
   <g transform={`translate(${x} ${y})`}>
     <circle r={r} fill={UI.pill} opacity={0.55} />
     <circle r={r} fill="none" stroke={UI.text} strokeWidth={5} opacity={0.85} />
@@ -208,7 +210,8 @@ export const Toast: React.FC<{ x: number; y: number; t: number; text: string; ho
 
 /** VHS-style tape lines and a moving bright band, for a power that bends time (rewind, fast-forward). Full frame. */
 export const TapeLines: React.FC<{ f: number }> = ({ f }) => {
-  const band = 1080 - ((f * 53) % 1400) + 160;
+  const { width: W, height: H } = CANVAS();
+  const band = H - ((f * 53) % Math.round(H * 1.3)) + Math.round(H * 0.15);
   return (
     <g>
       <defs>
@@ -216,8 +219,8 @@ export const TapeLines: React.FC<{ f: number }> = ({ f }) => {
           <rect width="4" height="2" fill="#000" opacity="0.22" />
         </pattern>
       </defs>
-      <rect width="1920" height="1080" fill="url(#tapeScan)" />
-      <rect x={0} y={band} width={1920} height={26} fill="#FFFFFF" opacity={0.1} />
+      <rect width={W} height={H} fill="url(#tapeScan)" />
+      <rect x={0} y={band} width={W} height={26} fill="#FFFFFF" opacity={0.1} />
     </g>
   );
 };
@@ -231,17 +234,20 @@ export const TitleCard: React.FC<{ t: number; lines: [string, string]; accent?: 
   const pop = (d: number) => backOut(clamp((t - d) / 9));
   const pulse = t >= accentT && t < accentT + 12 ? 1 + 0.14 * Math.sin(((t - accentT) / 12) * Math.PI) : 1;
   const words = lines[1].split(' ');
+  // In 9:16 the lines are sized down until each fits the visible strip of the world
+  const s1 = fitW(lines[0], size / 2);
+  const s2 = fitW(lines[1], size);
   return (
     <g>
       <g transform={`translate(960 ${y}) scale(${pop(2)})`}>
-        <text textAnchor="middle" fontFamily={FONT.title} fontWeight={600} fontSize={size / 2} letterSpacing={4} fill="#F6EFE3" stroke="#1A1230" strokeWidth={8} paintOrder="stroke">
+        <text textAnchor="middle" fontFamily={FONT.title} fontWeight={600} fontSize={s1} letterSpacing={4} fill="#F6EFE3" stroke="#1A1230" strokeWidth={8 / (size / s1)} paintOrder="stroke">
           {lines[0]}
         </text>
       </g>
-      <g transform={`translate(960 ${y + size - 3}) scale(${pop(5)})`}>
-        <text textAnchor="middle" fontFamily={FONT.title} fontWeight={700} fontSize={size} fill={C.orange} stroke="#1A1230" strokeWidth={12} paintOrder="stroke" style={{ filter: 'drop-shadow(0 0 22px rgba(255,138,61,0.55))' }}>
+      <g transform={`translate(960 ${y + s2 - 3}) scale(${pop(5)})`}>
+        <text textAnchor="middle" fontFamily={FONT.title} fontWeight={700} fontSize={s2} fill={C.orange} stroke="#1A1230" strokeWidth={12 / (size / s2)} paintOrder="stroke" style={{ filter: 'drop-shadow(0 0 22px rgba(255,138,61,0.55))' }}>
           {words.map((w, i) => (
-            <tspan key={i} style={w.replace(/[^\w]/g, '') === accent ? { fontSize: size * pulse } : undefined} fill={w.replace(/[^\w]/g, '') === accent ? '#FFE27A' : undefined}>
+            <tspan key={i} style={w.replace(/[^\w]/g, '') === accent ? { fontSize: s2 * pulse } : undefined} fill={w.replace(/[^\w]/g, '') === accent ? '#FFE27A' : undefined}>
               {(i ? ' ' : '') + w}
             </tspan>
           ))}

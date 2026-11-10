@@ -74,7 +74,8 @@ Satu baris topik ("What if you could rewind 10 seconds?") masuk, episode jadi 15
 formula tujuh beat What If, voice ElevenLabs, storyboard yang dicek sendiri sebelum animasi, setiap frame digambar
 sebagai SVG yang dirender Remotion, sound design disintesis, master ke -14 LUFS.
 
-- **Isi**: `styles/jkson-style/` — `SKILL.md` (alur kerja 8 langkah), `references/` (formula, look, kit, sound, traps), `scripts/` (voice, plan, stills, board, sfx, mixcheck, motiongrid, master), `studio/` (proyek Remotion + dua episode contoh: `rewind` dan `copy-paste`), `opencode/commands/what-if.md`
+- **Isi**: `styles/jkson-style/` — `SKILL.md` (alur kerja 8 langkah), `references/` (formula, look, kit, sound, traps), `scripts/` (voice, plan, stills, board, sfx, mixcheck, motiongrid, master), `studio/` (proyek Remotion + episode contoh: `rewind`, `copy-paste`, dan demo `intro-demo` yang bisa dirender tanpa ElevenLabs), `opencode/commands/what-if.md`
+- **Rasio**: 16:9 (default) dan 9:16 — re-frame vertikal dari dunia animasi yang sama, per-shot reframe di `episode.json`; render `python scripts/master.py <slug> --aspect 9x16`
 - **Pasang**:
 
 ```bash

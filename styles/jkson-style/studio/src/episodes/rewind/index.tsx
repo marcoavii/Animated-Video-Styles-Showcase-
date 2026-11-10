@@ -1,5 +1,5 @@
 import React from 'react';
-import { defineEpisode, Timeline, LookDef, TapeLines, HudChip, Dial, FONT } from '../../engine';
+import { defineEpisode, Timeline, LookDef, TapeLines, HudChip, Dial, FONT, CANVAS } from '../../engine';
 import timeline from './timeline.json';
 import { Sh1, Sh2, Sh3, Sh4, Sh5, Sh6, Sh7, Sh8, Sh9, Sh10, Sh11, Sh12 } from './shots';
 
@@ -16,7 +16,7 @@ const rewindLook: LookDef = {
         <TapeLines f={f} />
         <HudChip f={f} label="REWIND" icon="rewind" />
         <Dial p={1 - p} readout={read} />
-        <text x={1820} y={1010} textAnchor="end" fontFamily={FONT.ui} fontSize={28} fill="#F6EFE3" opacity={0.6}>
+        <text x={CANVAS().width - 100} y={1010} textAnchor="end" fontFamily={FONT.ui} fontSize={28} fill="#F6EFE3" opacity={0.6}>
           {`TAKE ${n + 2}`}
         </text>
       </g>

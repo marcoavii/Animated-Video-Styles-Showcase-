@@ -1,0 +1,46 @@
+{
+ "id": "IntroDemo",
+ "slug": "intro-demo",
+ "topic": "What if you could copy anything?",
+ "title": ["WHAT IF YOU COULD", "COPY ANYTHING?"],
+ "note": "A 5-second silent sample (no ElevenLabs voice): two demos of the copy power, then the title card. The sound section documents the mix which was folded by hand from the existing library clips, because there is no voice stem to level against.",
+ "cast": ["pipHood"],
+ "shots": [
+  {"id": "S1", "size": "medium", "set": "kitchen", "key": 18, "note": "Pip points at a cookie on the island; the selection box draws round it"},
+  {"id": "S2", "size": "macro insert, high angle", "set": "kitchen (island top)", "key": 16, "note": "the copy pops in beside the first cookie with a flash ring"},
+  {"id": "T1", "size": "title, wide", "set": "rooftop", "key": 34, "note": "the premise over the city at dusk; the accent word pops"}
+ ],
+ "edit": [
+  {"shot": "S1", "at": "f:0"},
+  {"shot": "S2", "at": "f:42"},
+  {"shot": "T1", "at": "f:78"}
+ ],
+ "end": "f:150",
+ "refFrame": {"S1": -55},
+ "fx": [
+  {"at": "S2+12", "kind": "flash", "color": "#DDF2FF", "o": 0.45},
+  {"at": "T1", "kind": "flash", "color": "#FFF3DC"}
+ ],
+ "sound": {
+  "clips": {
+   "select_draw": ["a quick digital selection sound, a soft rising electronic shimmer as a box is drawn on screen, short", 0.6],
+   "copy_click": ["a crisp satisfying computer copy click with a tiny soft digital chime, short", 0.5],
+   "paste_pop": ["a bright magical pop as an object appears out of thin air, a soft shimmering whoosh into a pop", 0.7],
+   "sparkle": ["a short bright magical sparkle twinkle, cartoon", 0.8],
+   "title_boom": ["a cinematic whoosh rising into a deep boom impact", 1.6],
+   "roof_wind": ["a gentle evening breeze on a city rooftop, distant traffic", 7.0],
+   "music": ["playful quirky cartoon background music, pizzicato strings, glockenspiel and soft bass, light and curious, 110 bpm, no vocals", 17.0]
+  },
+  "events": [
+   ["S1+8", "select_draw", 0.3],
+   ["S2+4", "copy_click", 0.42],
+   ["S2+12", "paste_pop", 0.62],
+   ["S2+15", "sparkle", 0.25],
+   ["T1", "title_boom", 0.42, "peak"],
+   ["T1", "roof_wind", 0.24, "onset"],
+   ["T1+6", "sparkle", 0.3]
+  ],
+  "music": {"clip": "music"},
+  "levels": {"sfx_lu": 1.5, "music_lu": -7.5}
+ }
+}

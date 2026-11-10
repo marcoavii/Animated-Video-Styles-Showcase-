@@ -1,0 +1,83 @@
+{
+ "slug": "intro-demo",
+ "title": "WHAT IF YOU COULD COPY ANYTHING?",
+ "fps": 30,
+ "total": 150,
+ "segments": [
+  {
+   "shot": "S1",
+   "a": 0,
+   "b": 42,
+   "t0": 0,
+   "t1": 42,
+   "line": ""
+  },
+  {
+   "shot": "S2",
+   "a": 42,
+   "b": 78,
+   "t0": 0,
+   "t1": 36,
+   "line": ""
+  },
+  {
+   "shot": "T1",
+   "a": 78,
+   "b": 150,
+   "t0": 0,
+   "t1": 72,
+   "line": ""
+  }
+ ],
+ "shots": [
+  {
+   "id": "S1",
+   "size": "medium",
+   "key": 18,
+   "len": 42,
+   "first": 0,
+   "line": "",
+   "note": "Pip points at a cookie on the island; the selection box draws round it"
+  },
+  {
+   "id": "S2",
+   "size": "macro insert, high angle",
+   "key": 16,
+   "len": 36,
+   "first": 42,
+   "line": "",
+   "note": "the copy pops in beside the first cookie with a flash ring"
+  },
+  {
+   "id": "T1",
+   "size": "title, wide",
+   "key": 34,
+   "len": 72,
+   "first": 78,
+   "line": "",
+   "note": "the premise over the city at dusk; the accent word pops"
+  }
+ ],
+ "fx": [
+  {
+   "kind": "flash",
+   "color": "#DDF2FF",
+   "o": 0.45,
+   "f": 54
+  },
+  {
+   "kind": "flash",
+   "color": "#FFF3DC",
+   "f": 78
+  }
+ ],
+ "audio": {
+  "sfxVol": 0.8,
+  "musicVol": 0.1875,
+  "sfx": "intro-demo/sfx.wav",
+  "music": "intro-demo/music.wav"
+ },
+ "refFrame": {
+  "S1": -55
+ }
+}

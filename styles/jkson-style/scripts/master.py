@@ -17,9 +17,13 @@ raw = od / f'{slug}-raw.mp4'
 final = od / f'{slug}-final.mp4'
 npx = 'npx.cmd' if sys.platform == 'win32' else 'npx'
 
+if '--aspect' in args and '9x16' in args:
+    comp = ep['id'] + '9x16'
+else:
+    comp = ep['id']
 if '--skip-render' not in args:
     t0 = time.time()
-    cmd = [npx, 'remotion', 'render', 'src/index.ts', ep['id'], str(raw), '--log', 'error']
+    cmd = [npx, 'remotion', 'render', 'src/index.ts', comp, str(raw), '--log', 'error']
     if conc:
         cmd += ['--concurrency', conc]
     print(' '.join(cmd))
@@ -43,6 +47,7 @@ costs = load_json(od / 'costs.json', [])
 report = {
     'episode': ep['id'], 'file': str(final), 'seconds': round(dur, 2), 'lufs': lufs, 'true_peak_dbtp': true_peak,
     'segments': len(tl['segments']), 'cuts_per_min': round((len(tl['segments']) - 1) / (tl['total'] / tl['fps']) * 60, 1),
+    'aspect': '9:16' if comp.endswith('9x16') else '16:9',
     'elevenlabs_credits': sum(c['credits'] for c in costs), 'cost_lines': costs,
 }
 save_json(od / 'report.json', report)
