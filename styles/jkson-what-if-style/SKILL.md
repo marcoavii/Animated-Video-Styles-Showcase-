@@ -1,11 +1,11 @@
 ---
-name: jkson style
-description: Make a "What If" animated episode from one topic line ("What if you could rewind 10 seconds?"), in the dusk-lit stick-figure style of the What If channels that broke out on YouTube in October 2026. Writes the script on the seven-beat What If formula, voices it with ElevenLabs, lays out a shot list at the genre's pace, renders a storyboard of stills and self-checks it before animating, animates every frame in code (Remotion and SVG, with an original cast on one rig, rooms in perspective and light from lamps and windows), generates and syncs the sound, and masters a finished 15-25 s episode to -14 LUFS. Use when someone asks for a What If episode, animation or cartoon, "make a what if video about X", a stick-figure explainer in this style, to run the free What If skill, or writes "jkson style", "Jackson style", "gaya jkson", or "jkson".
+name: jkson-what-if-style
+description: jkson what if style. Make a "What If" animated episode from one topic line ("What if you could rewind 10 seconds?"), in the dusk-lit stick-figure style of the What If channels that broke out on YouTube in October 2026. Writes the script on the seven-beat What If formula, voices it with ElevenLabs, lays out a shot list at the genre's pace, renders a storyboard of stills and self-checks it before animating, animates every frame in code (Remotion and SVG, with an original cast on one rig, rooms in perspective and light from lamps and windows), generates and syncs the sound, and masters a finished 15-25 s episode to -14 LUFS. Use when someone asks for a What If episode, animation or cartoon, "make a what if video about X", a stick-figure explainer in this style, to run the free What If skill, or writes "jkson what if style", "jkson what if", the old name "jkson style", "Jackson style", "gaya jkson", or "jkson".
 ---
 
 # What If Animation by Jackson AI
 
-> The "jkson style" skill. One topic line in, a finished 15-25 second episode out. Every frame is SVG that Claude writes (rendered by
+> The "jkson what if style" skill (formerly "jkson style"). One topic line in, a finished 15-25 second episode out. Every frame is SVG that Claude writes (rendered by
 Remotion); the voice and the sound come from ElevenLabs. Two examples ship in `studio/src/episodes/`, both ready to
 render: `rewind` ("What if you could rewind 10 seconds?", the proof clip: shots played backwards as the power) and
 `copy-paste` ("What if you could copy and paste anything?", the skill's first full run: a new kitchen set, a

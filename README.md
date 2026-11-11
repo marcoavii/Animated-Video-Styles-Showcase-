@@ -2,7 +2,7 @@
 
 Satu skill Claude Code berisi tiga gaya video pendek. Kamu cukup kirim **VO ElevenLabs + script + brief visual**, lalu
 pilih gayanya. Repo ini juga berisi skill lain yang dipasang terpisah: **Basic style 4**, **Rick Style**, dan
-**jkson style** (animasi kartun "What If" 15-25 detik dari satu baris topik, di bagian bawah README).
+**jkson what if style** (animasi kartun "What If" 15-25 detik dari satu baris topik, di bagian bawah README).
 
 | Gaya | Tampilan | Rasio |
 |---|---|---|
@@ -11,7 +11,7 @@ pilih gayanya. Repo ini juga berisi skill lain yang dipasang terpisah: **Basic s
 | **Basic style 3** | Kartun 3D sinematik three.js, whip + motion blur, teks 3D memantul | 9:16 / 16:9, 60 FPS |
 | **Basic style 4** | Karakter stiker 2D vektor (outline tebal + glow krem) di set 3D kalem, hard cut, insert tangan + benda, kata kunci kuning | 9:16 / 16:9, 60 FPS |
 | **Rick Style** | Karakter kepala putih bergaris tinta, kaki lidi, di dunia 3D sangat berwarna, kamera terbang FPV, dissolve | 9:16 / 16:9, 60 FPS |
-| **jkson style** | animasi kartun stick-figure "What If" (Remotion + ElevenLabs) | 9:16 / 16:9, 60 FPS |
+| **jkson what if style** | animasi kartun stick-figure "What If" (Remotion + ElevenLabs) | 9:16 / 16:9, 60 FPS |
 
 ## Pasang
 
@@ -24,12 +24,12 @@ git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-
 cp -r /tmp/styles-repo/styles/basic-style-4 ~/.claude/skills/basic-style-4
 cp -r /tmp/styles-repo/styles/rick-style ~/.claude/skills/rick-style && rm -rf /tmp/styles-repo
 
-# jkson style - animasi kartun stick-figure "What If" (Remotion + ElevenLabs)
+# jkson what if style - animasi kartun stick-figure "What If" (Remotion + ElevenLabs)
 git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git /tmp/styles-repo
-cp -r /tmp/styles-repo/styles/jkson-style ~/.claude/skills/jkson-style && rm -rf /tmp/styles-repo
+cp -r /tmp/styles-repo/styles/jkson-what-if-style ~/.claude/skills/jkson-what-if-style && rm -rf /tmp/styles-repo
 ```
 
-Nama folder tujuannya harus benar: `basic-style` untuk Basic style, `basic-style-4` untuk Basic style 4, `rick-style` untuk Rick Style, dan `jkson-style` untuk jkson style (jangan meng-clone seluruh repo langsung sebagai `jkson-style`, karena `SKILL.md` di akar repo milik Basic style). Mulai chat baru setelah memasang.
+Nama folder tujuannya harus benar: `basic-style` untuk Basic style, `basic-style-4` untuk Basic style 4, `rick-style` untuk Rick Style, dan `jkson-what-if-style` untuk jkson what if style (jangan meng-clone seluruh repo langsung sebagai `jkson-what-if-style`, karena `SKILL.md` di akar repo milik Basic style). Mulai chat baru setelah memasang.
 
 ## Cara pakai
 
@@ -80,22 +80,25 @@ Video MP4, file VO, dan audio tidak disimpan di repo ini.
 
 `styles/basic-style-2/kit/fonts/` berisi Rubik dan Black Ops One (SIL Open Font License) serta Permanent Marker (Apache License 2.0). `styles/basic-style-3/kit/scenes/fonts/` berisi Plus Jakarta Sans (SIL Open Font License). Semua dari paket Fontsource. `styles/basic-style-4/kit/scenes/fonts/` dan `styles/rick-style/kit/scenes/fonts/` berisi Montserrat (SIL Open Font License).
 
-## jkson style (What If animation)
+## jkson what if style (What If animation)
+
+Dulu bernama **jkson style**; namanya diganti menjadi **jkson what if style** (folder `jkson-what-if-style`). Nama lama tetap memicu skill ini.
 
 Skill kedua di repo ini: animasi kartun stick-figure gaya channel "What If" yang meledak di YouTube Oktober 2026.
 Satu baris topik ("What if you could rewind 10 seconds?") masuk, episode jadi 15-25 detik keluar: script di atas
 formula tujuh beat What If, voice ElevenLabs, storyboard yang dicek sendiri sebelum animasi, setiap frame digambar
 sebagai SVG yang dirender Remotion, sound design disintesis, master ke -14 LUFS.
 
-- **Isi**: `styles/jkson-style/` — `SKILL.md` (alur kerja 8 langkah), `references/` (formula, look, kit, sound, traps), `scripts/` (voice, plan, stills, board, sfx, mixcheck, motiongrid, master), `studio/` (proyek Remotion + episode contoh: `rewind`, `copy-paste`, dan demo `intro-demo` yang bisa dirender tanpa ElevenLabs), `opencode/commands/what-if.md`
+- **Isi**: `styles/jkson-what-if-style/` — `SKILL.md` (alur kerja 8 langkah), `references/` (formula, look, kit, sound, traps), `scripts/` (voice, plan, stills, board, sfx, mixcheck, motiongrid, master), `studio/` (proyek Remotion + episode contoh: `rewind`, `copy-paste`, dan demo `intro-demo` yang bisa dirender tanpa ElevenLabs), `opencode/commands/what-if.md`
 - **Rasio**: 16:9 (default) dan 9:16 — re-frame vertikal dari dunia animasi yang sama, per-shot reframe di `episode.json`; render `python scripts/master.py <slug> --aspect 9x16`
 - **Pasang**:
 
 ```bash
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git
-cp -r Animated-Video-Styles-Showcase-/styles/jkson-style ~/.config/opencode/skills/jkson-style
+cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.config/opencode/skills/jkson-what-if-style   # OpenCode
+cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.claude/skills/jkson-what-if-style            # Claude Code
 ```
 
-- **Pakai**: tulis "jkson style: what if ..." (atau `/jkson <topik>`) di OpenCode — skill terdeteksi otomatis
+- **Pakai**: tulis "jkson what if style: what if ..." di Claude Code atau OpenCode (atau `/what-if <topik>` di OpenCode) — skill terdeteksi otomatis
 - **Kebutuhan**: Python 3.9+ dengan numpy dan Pillow, Node 18+, ffmpeg dan ffprobe di PATH, dan `ELEVENLABS_API_KEY` di environment atau `.env` (tanpa VO pakai key, tanpa kredensial ElevenLabs)
 - Video MP4, file VO, dan audio SFX tidak disimpan di repo ini; `studio/library/sfx/` diisi ulang otomatis oleh `sfx.py` (cached by prompt), audio bisa juga diunduh ulang dari contoh yang ada.
