@@ -29,10 +29,10 @@ sh "$SKILL/scripts/new-video.sh" "<folder-kerja>" "<vo.mp3>"
 Kalau user tidak menyebut aspect ratio, pakai 9:16. Engine memang dibuat untuk 9:16.
 
 ### 2. Transkrip VO
-```powershell
-python "<SKILL>\scripts\transcribe.py" "<folder-kerja>\vo.mp3" "<folder-kerja>\words.json"
+```bash
+python "<SKILL>/scripts/transcribe.py" "<folder-kerja>/vo.mp3" "<folder-kerja>/words.json"
 ```
-Kalau `python` tidak ditemukan di Windows, coba `py -3.12`. Hasilnya durasi, segmen, timing per kata, dan daftar jeda. Kalau Python/faster-whisper tidak ada, pakai fallback browser (`tr.html`, lihat `references/produksi.md`).
+Kalau `python` tidak ditemukan: di Windows coba `py -3.12`, di Mac `python3`. Hasilnya durasi, segmen, timing per kata, dan daftar jeda. Kalau Python/faster-whisper tidak ada, pakai fallback browser (`tr.html`, lihat `references/produksi.md`).
 
 Bandingkan transkrip dengan script di brief. Whisper sering salah di nama diri dan istilah (contoh nyata: "Jan Peterson Kuhn" untuk Jan Pieterszoon Coen, "zaman S" untuk zaman es). Pakai ejaan script brief kalau suaranya sama. Kalau suara VO benar-benar beda dari script, ikuti suara VO dan beri tahu user. Kalau tidak ada script, koreksi dari konteks dan sebutkan koreksinya ke user, terutama yang masih tebakan.
 
@@ -48,9 +48,10 @@ Aturan yang gampang terlewat:
 - Setiap scene peta baru diawali keyframe `'h'`. Kalau kamera melompat jauh di tengah, pisahkan jadi dua entri `SCENES` dengan transisi.
 
 ### 5. Jalankan server + preview
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "<SKILL>\scripts\server.ps1" -Root "<folder-kerja>" -Port 8767
+```bash
+python "<SKILL>/scripts/server.py" --root "<folder-kerja>" --port 8767
 ```
+(Jalan di Windows, Mac, dan Linux. `server.ps1` versi lama masih ada untuk Windows.)
 Jalankan di background, lalu buka `http://localhost:8767/render.html` di browser bawaan. Setelah `story.js` diedit: jalankan `build.sh <folder-kerja>`, lalu navigate ulang.
 
 ### 6. QC frame
@@ -68,13 +69,13 @@ await window.ready; window.encP = encode('Judul-Video.mp4').then(n => window.enc
 Lalu pantau tiap ±40 detik sampai `encDone` terisi. `mixPeak` idealnya di bawah 0,9. Di atas itu limiter mulai bekerja, jadi turunkan amplitudo SFX.
 
 ### 8. Cek file MP4 asli
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "<SKILL>\scripts\check_video.ps1" -Video "<folder-kerja>\frames\Judul-Video.mp4"
+```bash
+python "<SKILL>/scripts/check_video.py" "<folder-kerja>/frames/Judul-Video.mp4"
 ```
 Pastikan resolusi, durasi, dan stream audio benar, lalu baca `contact_sheet.jpg` yang dihasilkan.
 
 ### 9. Serahkan
-Salin ke `Desktop\<Judul>\` beserta `source\` (`story.js`, `film.js`). Matikan server, kirim file ke user.
+Salin ke folder `<Judul>` di Desktop (Windows: `Desktop\<Judul>\`, Mac: `~/Desktop/<Judul>/`) beserta `source/` (`story.js`, `film.js`). Matikan server, kirim file ke user.
 
 Tutup dengan laporan jujur:
 - Yang sudah dicek dan yang belum. Claude tidak bisa mendengar audio, jadi mix dan sync suara harus dicek user.

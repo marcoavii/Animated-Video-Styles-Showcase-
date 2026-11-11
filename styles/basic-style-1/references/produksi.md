@@ -1,16 +1,24 @@
 # Catatan produksi
 
 ## Browser
-- Pane browser sering tersembunyi: timer melambat dan `video.play()`/seek bisa macet. Encode tetap jalan karena tidak bergantung timer real-time. Jangan pakai `<video>` di browser untuk QC, pakai `check_video.ps1`.
+- Pane browser sering tersembunyi: timer melambat dan `video.play()`/seek bisa macet. Encode tetap jalan karena tidak bergantung timer real-time. Jangan pakai `<video>` di browser untuk QC, pakai `check_video.py`.
 - `javascript_tool` timeout 45 detik. Jalankan pekerjaan panjang sebagai promise di `window`, lalu polling. Timeout bukan berarti gagal, cek `frames/` atau state-nya dulu. Jangan menjalankan ulang sebelum dicek.
-- Halaman `file://` tidak bisa dipakai, harus lewat `server.ps1`.
+- Halaman `file://` tidak bisa dipakai, harus lewat `server.py`.
 - Library (`topojson-client`, `mp4-muxer`, `world-atlas`, Google Fonts) diambil dari CDN, jadi perlu internet.
 - Setelah `build.sh`, navigate ulang ke `render.html`. Kalau tab sudah tertutup, pakai `navigate` tanpa `tabId`.
-- Notifikasi "failed exit code 255" dari server setelah `Stop-Process` itu normal, karena memang dimatikan.
+- Notifikasi "failed" / exit code bukan 0 dari server setelah dimatikan itu normal, karena memang dihentikan.
 
 ## Mematikan server
+Kalau server dijalankan sebagai tugas background, hentikan tugas itu. Kalau tidak:
+
+```bash
+# Mac / Linux
+pkill -f "scripts/server.py"
+```
+
 ```powershell
-Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" | Where-Object { $_.CommandLine -like '*server.ps1*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -Confirm:$false }
+# Windows
+Get-CimInstance Win32_Process -Filter "Name='python.exe'" | Where-Object { $_.CommandLine -like '*server.py*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -Confirm:$false }
 ```
 
 ## Transkrip fallback (tanpa Python)

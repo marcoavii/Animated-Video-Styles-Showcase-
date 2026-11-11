@@ -70,6 +70,24 @@ if (-not $py) {
   Write-Host "Python 3.10-3.13 still not found. Open a NEW PowerShell window and run this script again."
   exit 1
 }
+# The skills call plain `python`. Make sure it is this Python and not the Microsoft Store alias.
+$cur = Get-Command python -ErrorAction SilentlyContinue
+$curOk = $false
+if ($cur -and $cur.Source -notlike "*WindowsApps*") {
+  $curOk = ((& $cur.Source -c "import sys; print(int((3,10) <= sys.version_info[:2] <= (3,13)))" 2>$null) -eq "1")
+}
+if (-not $curOk) {
+  $pyDir = Split-Path -Parent $py
+  $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+  $add = @($pyDir, (Join-Path $pyDir "Scripts")) | Where-Object { ($userPath -split ";") -notcontains $_ }
+  if ($add) {
+    [Environment]::SetEnvironmentVariable("Path", (($add -join ";") + ";" + $userPath), "User")
+    Write-Host "Added $pyDir to your PATH so the 'python' command works."
+  }
+  Refresh-Path
+  $env:Path = "$pyDir;" + (Join-Path $pyDir "Scripts") + ";" + $env:Path
+}
+
 $args2 = @("$repo\setup\install.py")
 if ($Rest) { $args2 += $Rest.Split(" ") }
 & $py @args2

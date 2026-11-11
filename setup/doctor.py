@@ -43,6 +43,7 @@ def find_chrome():
               r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
               r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
               "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+              os.path.expanduser("~/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"),
               "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
               "/usr/bin/google-chrome", "/usr/bin/google-chrome-stable", "/usr/bin/chromium",
               "/usr/bin/chromium-browser", "/usr/bin/microsoft-edge"]:
@@ -93,6 +94,13 @@ for tool in ["ffmpeg", "ffprobe"]:
     out = run([tool, "-version"])
     check(tool, bool(out), (out or "").splitlines()[0][:60] if out else "",
           fix("winget install -e --id Gyan.FFmpeg", "brew install ffmpeg", "sudo apt install ffmpeg"))
+
+# Burned-in captions (2D Vintage Character) use ffmpeg's subtitles filter, which needs libass
+if run(["ffmpeg", "-version"]):
+    filters = run(["ffmpeg", "-hide_banner", "-filters"]) or ""
+    check("ffmpeg subtitles filter", " subtitles " in filters, "libass",
+          fix("winget install -e --id Gyan.FFmpeg", "brew install ffmpeg-full   (then put $(brew --prefix ffmpeg-full)/bin first on PATH)",
+              "install an ffmpeg built with libass"))
 
 # Browser for rendering (Basic style 1-4, Rick Style)
 ch = find_chrome()

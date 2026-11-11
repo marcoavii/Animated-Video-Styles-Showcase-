@@ -18,23 +18,47 @@ pilih gayanya. Repo ini juga berisi skill lain yang dipasang terpisah: **Basic s
 
 Satu installer memasang **semua** gaya di repo ini plus semua tool yang dibutuhkan: program (Python 3.12, Node.js, ffmpeg, Git, Chrome) kalau belum ada, paket Python (numpy, scipy, Pillow, faster-whisper, av 14.2.0, edge-tts), paket Node yang dipakai renderer (three, puppeteer-core, Playwright Chromium), model suara Whisper `small`, lalu menyalin skill ke `~/.claude/skills`. Di akhir ia menjalankan pengecekan dan menulis OK / MISSING untuk setiap item.
 
-**Windows** (PowerShell):
+### Windows
+
+Buka **PowerShell**, lalu:
 
 ```powershell
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git
 powershell -ExecutionPolicy Bypass -File Animated-Video-Styles-Showcase-\setup\install.ps1
 ```
 
-**Mac / Linux**:
+Program yang belum ada dipasang lewat winget (bawaan Windows 10/11). Installer juga memastikan perintah `python` mengarah ke Python yang benar, bukan alias Microsoft Store.
+
+### Mac
+
+Buka aplikasi **Terminal**, lalu:
 
 ```bash
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git
 bash Animated-Video-Styles-Showcase-/setup/install.sh
 ```
 
-Belum punya Git? Unduh ZIP dari tombol **Code → Download ZIP**, ekstrak, lalu jalankan perintah kedua dari folder hasil ekstrak.
+Kalau Mac menawarkan memasang "command line developer tools" saat `git clone`, klik **Install**, tunggu selesai, lalu ulangi perintahnya.
 
-Installer bertanya dulu sebelum memasang program lewat winget (Windows) atau Homebrew (Mac); tambahkan `-Yes` / `--yes` supaya langsung jalan. Di Linux ia menuliskan perintah `apt` yang perlu kamu jalankan. Setelah selesai, **mulai chat Claude Code baru** supaya skill terbaca. Folder hasil clone boleh dihapus.
+Di Mac installer ini:
+- memasang **Homebrew** kalau belum ada (macOS meminta password login sekali), lalu Python 3.12, Node.js, ffmpeg, Git, dan Google Chrome;
+- memakai `ffmpeg-full` kalau ffmpeg biasa tidak punya filter subtitle (dipakai untuk caption);
+- membuat lingkungan Python sendiri di `~/.animated-video-styles/venv` (supaya macOS tidak menolak `pip install`) dan menaruh `python`-nya di depan PATH lewat `~/.zprofile`, `~/.zshrc`, dan `~/.bash_profile`. Jadi perintah `python` yang dipakai skill langsung jalan;
+- selebihnya sama dengan Windows: paket Node, Playwright Chromium, model Whisper, salin skill, lalu pengecekan.
+
+Proyek di Mac dibuat di `~/Videos/<gaya>/<nama>`, hasil akhir disalin ke `~/Desktop`. Render 3D memakai GPU lewat Metal.
+
+### Linux
+
+Sama seperti Mac (`bash .../setup/install.sh`). Program yang kurang dipasang dengan `apt` (meminta password sudo).
+
+### Setelah memasang
+
+Installer bertanya sekali sebelum memasang program; tambahkan `-Yes` (Windows) atau `--yes` (Mac/Linux) supaya langsung jalan. Belum punya Git? Unduh ZIP dari tombol **Code → Download ZIP**, ekstrak, lalu jalankan perintah kedua dari folder hasil ekstrak.
+
+Setelah selesai, **tutup terminal dan mulai chat Claude Code baru** supaya PATH dan skill terbaca. Folder hasil clone boleh dihapus.
+
+Yang tidak bisa dipasang otomatis: **ElevenLabs API key** (hanya untuk jkson what if style, isi sendiri). Font dan data peta Basic style 1 serta browser Remotion untuk jkson diunduh otomatis saat pertama dipakai, jadi butuh internet.
 
 | Perintah | Gunanya |
 |---|---|
@@ -102,13 +126,14 @@ Setiap gaya punya `STYLE.md` (alur kerja lengkap) dan `references/` sendiri. Kod
 
 ## Kebutuhan
 
-Semuanya dipasang oleh installer di atas:
+Semuanya dipasang oleh installer di atas, di Windows maupun Mac:
 
 - Python 3.10-3.13 (disarankan 3.12) dengan numpy, scipy, Pillow, edge-tts, faster-whisper, dan `av==14.2.0` (av yang lebih baru merusak faster-whisper)
-- ffmpeg dan ffprobe di PATH
+- ffmpeg dan ffprobe di PATH, dengan filter subtitle (libass)
 - Node.js 18+
 - Chrome atau Edge (bisa diarahkan lewat env `CHROME_PATH`)
-- Git (di Windows sekalian Git Bash, dipakai skrip `new-video.sh`)
+- Git (di Windows sekalian Git Bash, dipakai skrip `new-video.sh`; Mac sudah punya shell sendiri)
+- Mac: Homebrew dan lingkungan Python `~/.animated-video-styles/venv`
 - Internet saat render Basic style 1 (data peta, font, dan encoder diunduh) dan saat transkrip pertama (model Whisper)
 - Khusus jkson what if style: `ELEVENLABS_API_KEY`
 

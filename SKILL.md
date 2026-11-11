@@ -37,7 +37,7 @@ Folder proyek tetap sama seperti sebelum digabung:
 
 ## Aturan bersama
 
-- **Cek tool dulu** kalau ini video pertama di komputer ini atau ada error "not found": jalankan `python <root skill>/setup/doctor.py` (Windows: `py -3.12` kalau `python` tidak ada). Kalau ada yang MISSING, minta user menjalankan installer repo (`setup/install.ps1` di Windows, `setup/install.sh` di Mac/Linux) atau pasang yang kurang sesuai petunjuk di baris itu.
+- **Cek tool dulu** kalau ini video pertama di komputer ini atau ada error "not found": jalankan `python <root skill>/setup/doctor.py` (kalau `python` tidak ada: Windows `py -3.12`, Mac `python3`). Kalau ada yang MISSING, minta user menjalankan installer repo (`setup/install.ps1` di Windows, `setup/install.sh` di Mac/Linux) atau pasang yang kurang sesuai petunjuk di baris itu.
 - **VO selalu dari user** (ElevenLabs). Jangan pernah membuat voice over atau memakai TTS, termasuk sebagai suara sementara. Kalau VO belum ada, minta dulu.
 - **Satu video = satu gaya.** Jangan mencampur engine, kode, prop, atau aset antar gaya, supaya hasil tiap gaya tetap sama dengan video-video aslinya. Kalau user minta gaya lain di tengah jalan, mulai proyek baru dengan gaya itu.
 - **Jaga tampilan.** User sudah menyukai visual ketiga gaya. Variasi datang dari cerita, set, dan gag sesuai brief, bukan dari mengubah gaya.
