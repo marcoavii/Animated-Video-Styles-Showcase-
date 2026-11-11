@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Rick Style</title>
+<link rel="icon" href="data:,">
+<script type="importmap">
+{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }
+</script>
+<style>
+  @font-face { font-family: "Caption"; font-weight: 900; src: url("./fonts/Montserrat-Black.ttf") format("truetype"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 800; src: url("./fonts/Montserrat-Black.ttf") format("truetype"); }
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: var(--w); height: var(--h); overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; }
+  /* Rick Style caption (from the reference): one or two words, heavy white sans, black edge and a dark drop shadow,
+     cut on the word with no fade, no colour highlight. Centre at 70% of the height. */
+  #cap {
+    position: absolute; left: 0; right: 0; top: 70%; transform: translateY(-50%); text-align: center; white-space: nowrap;
+    font-family: "Caption"; font-weight: 900; font-size: calc(var(--w) * 0.066); letter-spacing: 0; line-height: 1;
+    color: #fff; -webkit-text-stroke: calc(var(--w) * 0.0068) #0e0b0a; paint-order: stroke fill;
+    text-shadow: calc(var(--w) * 0.002) calc(var(--w) * 0.005) 0 rgba(0,0,0,.85);
+  }
+  .land #cap { font-size: calc(var(--h) * 0.062); -webkit-text-stroke: calc(var(--h) * 0.0068) #0e0b0a; top: 74%; }
+</style>
+</head>
+<body>
+  <div id="stage"><canvas id="gl"></canvas><div id="cap"></div></div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Basic style 4</title>
+<link rel="icon" href="data:,">
+<script type="importmap">
+{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }
+</script>
+<style>
+  @font-face { font-family: "Caption"; font-weight: 800; src: url("./fonts/Montserrat-ExtraBold.ttf") format("truetype"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 800; src: url("./fonts/Montserrat-ExtraBold.ttf") format("truetype"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 700; src: url("./fonts/Montserrat-ExtraBold.ttf") format("truetype"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 500; src: url("./fonts/Montserrat-ExtraBold.ttf") format("truetype"); }
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: var(--w); height: var(--h); overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; }
+  /* Basic style 4 caption (from the reference): 1-2 words, Montserrat ExtraBold, white, thin dark edge and a soft
+     drop shadow, keywords in warm yellow, a quick fade in and out. Centre at 70% of the height. */
+  #cap {
+    position: absolute; left: 0; right: 0; top: 70%; transform: translateY(-50%); text-align: center; white-space: nowrap;
+    font-family: "Caption"; font-weight: 800;
+    font-size: calc(var(--w) * 0.078); letter-spacing: -0.01em; line-height: 1;
+    color: #fff; -webkit-text-stroke: calc(var(--w) * 0.0045) #1b1712; paint-order: stroke fill;
+    text-shadow: 0 calc(var(--w) * 0.004) calc(var(--w) * 0.009) rgba(0,0,0,.6);
+  }
+  #cap.hi { color: #ffc93a; }
+  /* 16:9: same rules, sized from the height */
+  .land #cap { font-size: calc(var(--h) * 0.075); -webkit-text-stroke: calc(var(--h) * 0.0045) #1b1712; top: 74%; }
+</style>
+</head>
+<body>
+  <div id="stage"><canvas id="gl"></canvas><div id="cap"></div></div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

@@ -1,14 +1,16 @@
 # Basic style
 
 Satu skill Claude Code berisi tiga gaya video pendek. Kamu cukup kirim **VO ElevenLabs + script + brief visual**, lalu
-pilih gayanya. Repo ini juga berisi **jkson style**, skill kedua di bagian bawah README: animasi kartun "What If"
-15-25 detik dari satu baris topik.
+pilih gayanya. Repo ini juga berisi skill lain yang dipasang terpisah: **Basic style 4**, **Rick Style**, dan
+**jkson style** (animasi kartun "What If" 15-25 detik dari satu baris topik, di bagian bawah README).
 
 | Gaya | Tampilan | Rasio |
 |---|---|---|
 | **Basic style 1** | Peta kuno parchment + karakter chibi, caption highlight kuning | 9:16, 30 FPS |
 | **Basic style 2** | Kartun tinta tebal malam berbulan + gag UI game, caption per kata | 9:16 / 16:9, 60 FPS |
 | **Basic style 3** | Kartun 3D sinematik three.js, whip + motion blur, teks 3D memantul | 9:16 / 16:9, 60 FPS |
+| **Basic style 4** | Karakter stiker 2D vektor (outline tebal + glow krem) di set 3D kalem, hard cut, insert tangan + benda, kata kunci kuning | 9:16 / 16:9, 60 FPS |
+| **Rick Style** | Karakter kepala putih bergaris tinta, kaki lidi, di dunia 3D sangat berwarna, kamera terbang FPV, dissolve | 9:16 / 16:9, 60 FPS |
 | **jkson style** | animasi kartun stick-figure "What If" (Remotion + ElevenLabs) | 9:16 / 16:9, 60 FPS |
 
 ## Pasang
@@ -17,12 +19,17 @@ pilih gayanya. Repo ini juga berisi **jkson style**, skill kedua di bagian bawah
 # Basic style (1 / 2 / 3) - kartun peta chibi, tinta malam, atau 3D sinematik
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git ~/.claude/skills/basic-style
 
+# Basic style 4 dan Rick Style - masing-masing skill terpisah
+git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git /tmp/styles-repo
+cp -r /tmp/styles-repo/styles/basic-style-4 ~/.claude/skills/basic-style-4
+cp -r /tmp/styles-repo/styles/rick-style ~/.claude/skills/rick-style && rm -rf /tmp/styles-repo
+
 # jkson style - animasi kartun stick-figure "What If" (Remotion + ElevenLabs)
 git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git /tmp/styles-repo
 cp -r /tmp/styles-repo/styles/jkson-style ~/.claude/skills/jkson-style && rm -rf /tmp/styles-repo
 ```
 
-Nama folder tujuannya harus benar: `basic-style` untuk Basic style, dan `jkson-style` untuk jkson style (jangan meng-clone seluruh repo langsung sebagai `jkson-style`, karena `SKILL.md` di akar repo milik Basic style). Mulai chat baru setelah memasang.
+Nama folder tujuannya harus benar: `basic-style` untuk Basic style, `basic-style-4` untuk Basic style 4, `rick-style` untuk Rick Style, dan `jkson-style` untuk jkson style (jangan meng-clone seluruh repo langsung sebagai `jkson-style`, karena `SKILL.md` di akar repo milik Basic style). Mulai chat baru setelah memasang.
 
 ## Cara pakai
 
@@ -34,9 +41,13 @@ Basic style 2 9:16
 Basic style 2 16:9
 Basic style 3 9:16
 Basic style 3 16:9
+Basic style 4 9:16
+Basic style 4 16:9
+Rick Style 9:16
+Rick Style 16:9
 ```
 
-lalu kirim VO, script, dan brief visual. Kalau cuma menulis `Basic style` atau langsung kirim VO + brief, Claude akan menanyakan mau pakai gaya 1, 2, atau 3 (dan rasionya).
+lalu kirim VO, script, dan brief visual. Kalau cuma menulis `Basic style` atau langsung kirim VO + brief, Claude akan menanyakan mau pakai gaya 1, 2, atau 3 (dan rasionya). Basic style 4 dan Rick Style dipanggil dengan namanya sendiri.
 
 Skill ini tidak pernah membuat voice over sendiri.
 
@@ -48,6 +59,8 @@ Skill ini tidak pernah membuat voice over sendiri.
 | `styles/basic-style-1/` | Engine Canvas peta, scripts, templates, 6 contoh video |
 | `styles/basic-style-2/` | Kit Canvas + audio sintesis, templates, contoh "Taman Iblis" |
 | `styles/basic-style-3/` | Kit three.js + audio sintesis, templates, contoh "Penjaga Mercusuar" |
+| `styles/basic-style-4/` | Skill terpisah: `SKILL.md`, kit three.js + karakter stiker 2D (`toon.js`, `props2d.js`), audio sintesis, templates, contoh "Smong" 9:16 |
+| `styles/rick-style/` | Skill terpisah: `SKILL.md`, kit three.js + karakter tinta billboard (`sketch.js`), set berwarna, audio sintesis, templates, contoh "Smong" 9:16 |
 
 Setiap gaya punya `STYLE.md` (alur kerja lengkap) dan `references/` sendiri. Kode antar gaya sengaja tidak dicampur, supaya hasil tiap gaya tetap sama dengan video aslinya.
 
@@ -59,13 +72,13 @@ Setiap gaya punya `STYLE.md` (alur kerja lengkap) dan `references/` sendiri. Kod
 - Chrome atau Edge
 - Internet saat render Basic style 1 (data peta, font, dan encoder diunduh)
 
-Proyek dibuat di `D:\basic-style-2\<nama>` dan `D:\basic-style-3\<nama>`. Basic style 1 memakai folder kerja sementara. Semua hasil disalin ke Desktop. Path Python ditulis untuk Windows, jadi sesuaikan kalau beda.
+Proyek dibuat di `D:\basic-style-2\<nama>`, `D:\basic-style-3\<nama>`, `D:\basic-style-4\<nama>`, dan `D:\rick-style\<nama>`. Basic style 1 memakai folder kerja sementara. Semua hasil disalin ke Desktop. Path Python ditulis untuk Windows, jadi sesuaikan kalau beda.
 
 Video MP4, file VO, dan audio tidak disimpan di repo ini.
 
 ## Lisensi font
 
-`styles/basic-style-2/kit/fonts/` berisi Rubik dan Black Ops One (SIL Open Font License) serta Permanent Marker (Apache License 2.0). `styles/basic-style-3/kit/scenes/fonts/` berisi Plus Jakarta Sans (SIL Open Font License). Semua dari paket Fontsource.
+`styles/basic-style-2/kit/fonts/` berisi Rubik dan Black Ops One (SIL Open Font License) serta Permanent Marker (Apache License 2.0). `styles/basic-style-3/kit/scenes/fonts/` berisi Plus Jakarta Sans (SIL Open Font License). Semua dari paket Fontsource. `styles/basic-style-4/kit/scenes/fonts/` dan `styles/rick-style/kit/scenes/fonts/` berisi Montserrat (SIL Open Font License).
 
 ## jkson style (What If animation)
 
