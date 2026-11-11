@@ -12,7 +12,7 @@ pilih gayanya. Repo ini juga berisi skill lain yang dipasang terpisah: **Basic s
 | **Basic style 4** | Karakter stiker 2D vektor (outline tebal + glow krem) di set 3D kalem, hard cut, insert tangan + benda, kata kunci kuning | 9:16 / 16:9, 60 FPS |
 | **Rick Style** | Karakter kepala putih bergaris tinta, kaki lidi, di dunia 3D sangat berwarna, kamera terbang FPV, dissolve | 9:16 / 16:9, 60 FPS |
 | **2D Vintage Character** | Karakter kartun 2D kepala kacang bergaris ungu tebal-tipis di dunia 3D berwarna yang dicat tangan, kamera meluncur halus, preset cahaya pagi/senja/malam | 9:16 / 16:9, 30 FPS |
-| **jkson what if style** | animasi kartun stick-figure "What If" (Remotion + ElevenLabs) | 9:16 / 16:9, 60 FPS |
+| **jkson what if style** | animasi kartun stick-figure "What If" (Remotion), dari VO ElevenLabs milikmu, SFX + musik disintesis | 9:16 / 16:9, 60 FPS |
 
 ## Pasang (sekali per komputer)
 
@@ -58,7 +58,7 @@ Installer bertanya sekali sebelum memasang program; tambahkan `-Yes` (Windows) a
 
 Setelah selesai, **tutup terminal dan mulai chat Claude Code baru** supaya PATH dan skill terbaca. Folder hasil clone boleh dihapus.
 
-Yang tidak bisa dipasang otomatis: **ElevenLabs API key** (hanya untuk jkson what if style, isi sendiri). Font dan data peta Basic style 1 serta browser Remotion untuk jkson diunduh otomatis saat pertama dipakai, jadi butuh internet.
+Tidak perlu API key apa pun: semua gaya memakai VO yang kamu buat sendiri di ElevenLabs lalu upload. Font dan data peta Basic style 1 serta browser Remotion untuk jkson diunduh otomatis saat pertama dipakai, jadi butuh internet.
 
 | Perintah | Gunanya |
 |---|---|
@@ -103,11 +103,13 @@ Rick Style 9:16
 Rick Style 16:9
 2D Vintage Character 9:16
 2D Vintage Character 16:9
+jkson what if style 16:9
+jkson what if style 9:16
 ```
 
-lalu kirim VO, script, dan brief visual. Kalau cuma menulis `Basic style` atau langsung kirim VO + brief, Claude akan menanyakan mau pakai gaya 1, 2, atau 3 (dan rasionya). Basic style 4, Rick Style, dan 2D Vintage Character dipanggil dengan namanya sendiri.
+lalu kirim VO, script, dan brief visual. Kalau cuma menulis `Basic style` atau langsung kirim VO + brief, Claude akan menanyakan mau pakai gaya 1, 2, atau 3 (dan rasionya). Basic style 4, Rick Style, 2D Vintage Character, dan jkson what if style dipanggil dengan namanya sendiri.
 
-Basic style 1-4 dan Rick Style tidak pernah membuat voice over sendiri. 2D Vintage Character juga menerima VO milikmu; kalau hanya diberi script, ia bisa membuat suara gratis lewat edge-tts.
+Basic style 1-4, Rick Style, dan jkson what if style tidak pernah membuat voice over sendiri. 2D Vintage Character juga menerima VO milikmu; kalau hanya diberi script, ia bisa membuat suara gratis lewat edge-tts.
 
 ## Isi
 
@@ -135,7 +137,6 @@ Semuanya dipasang oleh installer di atas, di Windows maupun Mac:
 - Git (di Windows sekalian Git Bash, dipakai skrip `new-video.sh`; Mac sudah punya shell sendiri)
 - Mac: Homebrew dan lingkungan Python `~/.animated-video-styles/venv`
 - Internet saat render Basic style 1 (data peta, font, dan encoder diunduh) dan saat transkrip pertama (model Whisper)
-- Khusus jkson what if style: `ELEVENLABS_API_KEY`
 
 Proyek dibuat di `D:\basic-style-2\<nama>`, `D:\basic-style-3\<nama>`, `D:\basic-style-4\<nama>`, dan `D:\rick-style\<nama>`. Di komputer tanpa drive D: otomatis pindah ke `~/Videos/<gaya>/<nama>`, atau atur sendiri lewat env `VIDEO_ROOT`. Basic style 1 memakai folder kerja sementara, 2D Vintage Character membuat folder proyek di folder kerja. Semua hasil disalin ke Desktop.
 
@@ -155,10 +156,10 @@ Dulu bernama **jkson style**; namanya diganti menjadi **jkson what if style** (f
 
 Skill kedua di repo ini: animasi kartun stick-figure gaya channel "What If" yang meledak di YouTube Oktober 2026.
 Satu baris topik ("What if you could rewind 10 seconds?") masuk, episode jadi 15-25 detik keluar: script di atas
-formula tujuh beat What If, voice ElevenLabs, storyboard yang dicek sendiri sebelum animasi, setiap frame digambar
-sebagai SVG yang dirender Remotion, sound design disintesis, master ke -14 LUFS.
+formula tujuh beat What If, VO ElevenLabs milikmu (diupload, diselaraskan per kata dengan Whisper), storyboard yang dicek sendiri sebelum animasi, setiap frame digambar
+sebagai SVG yang dirender Remotion, efek suara dan musik disintesis offline (tanpa API key), master ke -14 LUFS. Kirim VO + script-nya seperti gaya lain; kalau baru punya topik, Claude menuliskan script untuk kamu rekam di ElevenLabs.
 
-- **Isi**: `styles/jkson-what-if-style/` — `SKILL.md` (alur kerja 8 langkah), `references/` (formula, look, kit, sound, traps), `scripts/` (voice, plan, stills, board, sfx, mixcheck, motiongrid, master), `studio/` (proyek Remotion + episode contoh: `rewind`, `copy-paste`, dan demo `intro-demo` yang bisa dirender tanpa ElevenLabs), `opencode/commands/what-if.md`
+- **Isi**: `styles/jkson-what-if-style/` — `SKILL.md` (alur kerja 8 langkah), `references/` (formula, look, kit, sound, traps), `scripts/` (voice, plan, stills, board, sfx, synth, mixcheck, motiongrid, master), `studio/` (proyek Remotion + episode contoh: `rewind`, `copy-paste`, dan demo `intro-demo` tanpa suara), `opencode/commands/what-if.md`
 - **Rasio**: 16:9 (default) dan 9:16 — re-frame vertikal dari dunia animasi yang sama, per-shot reframe di `episode.json`; render `python scripts/master.py <slug> --aspect 9x16`
 - **Pasang**:
 
@@ -168,6 +169,6 @@ cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.config/openc
 cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.claude/skills/jkson-what-if-style            # Claude Code
 ```
 
-- **Pakai**: tulis "jkson what if style: what if ..." di Claude Code atau OpenCode (atau `/what-if <topik>` di OpenCode) — skill terdeteksi otomatis
-- **Kebutuhan**: Python 3.9+ dengan numpy dan Pillow, Node 18+, ffmpeg dan ffprobe di PATH, dan `ELEVENLABS_API_KEY` di environment atau `.env` (tanpa VO pakai key, tanpa kredensial ElevenLabs)
-- Video MP4, file VO, dan audio SFX tidak disimpan di repo ini; `studio/library/sfx/` diisi ulang otomatis oleh `sfx.py` (cached by prompt), audio bisa juga diunduh ulang dari contoh yang ada.
+- **Pakai**: tulis "jkson what if style 16:9" (atau 9:16) lalu kirim VO + script-nya, atau "jkson what if style: what if ..." kalau baru punya topik
+- **Kebutuhan**: dipasang oleh installer repo (Python + numpy, scipy, Pillow, faster-whisper; Node 18+; ffmpeg). Tidak perlu API key. Jalur lama lewat API ElevenLabs masih ada (`voice.py --tts`, `sfx.py --engine elevenlabs`) kalau memang mau, dan baru itu yang butuh `ELEVENLABS_API_KEY`
+- Video MP4, file VO, dan audio SFX tidak disimpan di repo ini; `studio/library/sfx/` diisi otomatis oleh `sfx.py` (disintesis dari prompt dan di-cache).

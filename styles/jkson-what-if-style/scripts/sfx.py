@@ -1,13 +1,16 @@
-"""Step 7: sound. Generates the episode's sound effects and music bed with ElevenLabs, lines each hit up on its frame,
-mixes the effects and music stems, and sets their levels against the voice.
+"""Step 7: sound. Makes the episode's sound effects and music bed, lines each hit up on its frame, mixes the effects
+and music stems, and sets their levels against the voice.
 
-python <skill>/scripts/sfx.py <slug> [--dry]
+python <skill>/scripts/sfx.py <slug> [--dry] [--engine synth|elevenlabs]
+--engine synth (default): every clip is synthesized offline from its prompt by synth.py. No key, no credits.
+--engine elevenlabs: the clips come from ElevenLabs' sound generation (needs ELEVENLABS_API_KEY, uses credits).
 Reads  src/episodes/<slug>/episode.json "sound", timeline.json and words.json
 Writes public/<slug>/sfx.wav and music.wav, sets their volumes in timeline.json, prints the credits it used.
 --dry lists the clips it would generate (and what is already in the library) without calling the API.
 
 "sound": {
   "clips":   {"name": ["prompt", seconds], ...}       generated once, cached in library/sfx/ by name + prompt + length
+             {"name": ["prompt", seconds, "recipe"]}  synth only: force a recipe (synth.py --list shows them)
   "events":  [[cue, clip, gain, align, until], ...]   align "onset" (default: the attack lands on the cue) or "peak"
                                                         (the loudest moment does, for whooshes and booms); until = a cue
                                                         where the clip is cut with a short fade
@@ -24,10 +27,13 @@ import sys, time
 
 import numpy as np
 
-from wi import SR, api, clip_path, credits_used, spent_since, decode, ep_dir, load_episode, load_json, log_cost, loudness, pub_dir, resolve, save_json, stem, write_wav
+from wi import SR, LIB, api, clip_path, credits_used, spent_since, decode, ep_dir, load_episode, load_json, log_cost, loudness, pub_dir, resolve, save_json, stem, write_wav
 
 slug = sys.argv[1]
 dry = '--dry' in sys.argv
+engine = sys.argv[sys.argv.index('--engine') + 1] if '--engine' in sys.argv else 'synth'
+if engine not in ('synth', 'elevenlabs'):
+    raise SystemExit('--engine is synth or elevenlabs')
 ep = load_episode(slug)
 S = ep.get('sound')
 if not S:
@@ -42,14 +48,33 @@ cue = lambda c: resolve(c, words, FPS, tl['segments'], ids)
 DUR = tl['total'] / FPS + 0.4
 
 # ---------------------------------------------------------------- the clips
-need = {}
-for name, (prompt, secs) in S['clips'].items():
-    need[name] = (prompt, secs, clip_path(name, prompt, secs))
+need, forced = {}, {}
+for name, spec in S['clips'].items():
+    prompt, secs = spec[0], spec[1]
+    forced[name] = spec[2] if len(spec) > 2 else None
+    if engine == 'synth':
+        import hashlib
+        h = hashlib.sha1(f'{prompt}|{secs}|{forced[name]}'.encode()).hexdigest()[:8]
+        LIB.mkdir(parents=True, exist_ok=True)
+        need[name] = (prompt, secs, LIB / f'{name}-{h}-synth.wav')
+    else:
+        need[name] = (prompt, secs, clip_path(name, prompt, secs))
 missing = [n for n, (_, _, p) in need.items() if not p.exists()]
-print(f'{len(need)} clips, {len(need) - len(missing)} already in the library, {len(missing)} to generate: {", ".join(missing) or "none"}')
+print(f'{len(need)} clips ({engine}), {len(need) - len(missing)} already in the library, {len(missing)} to make: {", ".join(missing) or "none"}')
 if dry:
+    if engine == 'synth':
+        from synth import pick
+        for n, (prompt, secs, _) in need.items():
+            print(f'  {n:16s} {secs:>5}s  {pick(n, prompt, forced[n])}')
     sys.exit(0)
-if missing:
+if missing and engine == 'synth':
+    from synth import make
+    for n in missing:
+        prompt, secs, p = need[n]
+        x, recipe = make(n, prompt, secs, forced[n])
+        write_wav(p, x)
+        print(f'  synthesized {n} ({recipe})')
+elif missing:
     before, _ = credits_used()
     t0 = time.time()
     for n in missing:

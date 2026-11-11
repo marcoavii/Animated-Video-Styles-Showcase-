@@ -1,8 +1,10 @@
 # Sound
 
 The genre is dense with sound: every visible action has its own effect, ambience fills every gap, a light music bed
-runs under the cold open and cuts out at the turn. All of it comes from ElevenLabs' sound generation, cached in
-`library/sfx/`, so a clip is paid for once and reused by every later episode.
+runs under the cold open and cuts out at the turn. All of it is synthesized offline from each clip's prompt by
+`scripts/synth.py` (no key, no credits) and cached in `library/sfx/`. The prompt picks the recipe by its words
+(`synth.py --list`); a third field forces one. ElevenLabs' sound generation is still there behind
+`sfx.py --engine elevenlabs` for anyone who wants it; the notes on credits below apply only to that.
 
 ## Writing the events
 

@@ -132,7 +132,7 @@ for name in ["basic-style", "basic-style-4", "rick-style", "2d-vintage-character
 
 # ElevenLabs (only jkson what if style makes its own voice with it)
 check("ELEVENLABS_API_KEY", bool(os.environ.get("ELEVENLABS_API_KEY")), "set",
-      "only for jkson what if style: set it in the environment or in the studio's .env", required=False)
+      "not needed: every style uses your uploaded VO (only jkson's optional --tts / --engine elevenlabs uses it)", required=False)
 
 w = max(len(r[1]) for r in rows)
 for status, name, info in rows:

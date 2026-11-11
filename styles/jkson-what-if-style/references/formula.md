@@ -48,7 +48,7 @@ and the sister in danger (6), and ends on "Part 1".
 - **End on a question or a threat,** never a resolution: "So where are yours coming from?", "It's about to ruin
   your life."
 - **Length:** 45 to 65 words lands at 15 to 25 seconds after voice.py tightens the pauses (about 2.7 words a
-  second). Count before you call the voice: every character costs credits.
+  second). Count before the person records the voice.
 - **The title card** is the premise, in capitals: line 1 `WHAT IF YOU COULD`, line 2 the power in four words or
   fewer with a question mark. One word of line 2 can pulse as the accent (`10`, `ANYTHING`).
 
