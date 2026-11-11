@@ -4,7 +4,10 @@
 set -e
 NAME="$1"; RATIO="$2"; VO="$3"; EXAMPLE="$4"
 SKILL="$(cd "$(dirname "$0")/.." && pwd)"
-BASE="/d/basic-style-2"
+# Project root: $VIDEO_ROOT if set, else drive D: when it exists (Windows), else ~/Videos.
+if [ -z "$VIDEO_ROOT" ]; then if [ -d /d ]; then VIDEO_ROOT=/d; else VIDEO_ROOT="$HOME/Videos"; fi; fi
+BASE="$VIDEO_ROOT/basic-style-2"
+mkdir -p "$BASE"
 [ -n "$NAME" ] && [ -n "$RATIO" ] || { echo "usage: new-video.sh <name> <9:16|16:9> <vo-file> [example]"; exit 1; }
 case "$RATIO" in "9:16"|"16:9") ;; *) echo "ratio must be 9:16 or 16:9"; exit 1;; esac
 PROJ="$BASE/$NAME"

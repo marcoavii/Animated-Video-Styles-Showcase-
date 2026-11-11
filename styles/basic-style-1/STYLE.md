@@ -30,9 +30,9 @@ Kalau user tidak menyebut aspect ratio, pakai 9:16. Engine memang dibuat untuk 9
 
 ### 2. Transkrip VO
 ```powershell
-& "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe" "<SKILL>\scripts\transcribe.py" "<folder-kerja>\vo.mp3" "<folder-kerja>\words.json"
+python "<SKILL>\scripts\transcribe.py" "<folder-kerja>\vo.mp3" "<folder-kerja>\words.json"
 ```
-Hasilnya durasi, segmen, timing per kata, dan daftar jeda. Kalau Python/faster-whisper tidak ada, pakai fallback browser (`tr.html`, lihat `references/produksi.md`).
+Kalau `python` tidak ditemukan di Windows, coba `py -3.12`. Hasilnya durasi, segmen, timing per kata, dan daftar jeda. Kalau Python/faster-whisper tidak ada, pakai fallback browser (`tr.html`, lihat `references/produksi.md`).
 
 Bandingkan transkrip dengan script di brief. Whisper sering salah di nama diri dan istilah (contoh nyata: "Jan Peterson Kuhn" untuk Jan Pieterszoon Coen, "zaman S" untuk zaman es). Pakai ejaan script brief kalau suaranya sama. Kalau suara VO benar-benar beda dari script, ikuti suara VO dan beri tahu user. Kalau tidak ada script, koreksi dari konteks dan sebutkan koreksinya ke user, terutama yang masih tebakan.
 

@@ -7,7 +7,7 @@ description: 2D Vintage Character. Use when the user writes "2D Vintage Characte
 
 The look: flat 2D bean-head cartoon characters drawn on canvas "cards" with thick-thin plum outlines, standing in a colourful 3D world built from simple shapes with painted textures, black ink edges, depth of field, light presets (day, golden, dusk, night, dawn) and smooth gliding cameras. 30 fps, exactly as long as the voice.
 
-This skill's base directory is `<skill>`. The kit is `<skill>/kit` (treat it as read-only). The finishing rules are in `<skill>/tools/STANDARDS.md`: **read it before step 2**. Setup and repair steps (Node, Python, ffmpeg, Python packages) are in `<skill>/SETUP.md`.
+This skill's base directory is `<skill>`. The kit is `<skill>/kit` (treat it as read-only). The finishing rules are in `<skill>/tools/STANDARDS.md`: **read it before step 2**. Setup and repair steps (Node, Python, ffmpeg, Python packages) are in `<skill>/SETUP.md`; when this skill was installed from the Animated-Video-Styles-Showcase- repo, `~/.claude/skills/basic-style/setup/doctor.py` checks everything at once.
 
 Keep the user informed with a task list. Work straight through. Only stop to ask when something can't be decided from what they gave you.
 

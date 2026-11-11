@@ -1,13 +1,16 @@
 #!/bin/sh
 # usage: new-video.sh <nama-video> <9:16|16:9> "<path-vo>" [--example]
-# Makes D:/basic-style-3/<nama-video> as its own copy of the kit, so later skill changes cannot alter a finished video.
+# Makes <VIDEO_ROOT>/basic-style-3/<nama-video> (D:/basic-style-3 on a PC with drive D:) as its own copy of the kit, so later skill changes cannot alter a finished video.
 # --example loads the full Penjaga Mercusuar film instead of the empty template.
 set -e
 NAME="$1"; RATIO="$2"; VO="$3"; EXAMPLE="$4"
 [ -z "$NAME" ] || [ -z "$RATIO" ] && { echo "usage: new-video.sh <nama-video> <9:16|16:9> <path-vo> [--example]"; exit 2; }
 case "$RATIO" in 9:16|16:9) ;; *) echo "rasio harus 9:16 atau 16:9"; exit 2;; esac
 SKILL="$(cd "$(dirname "$0")/.." && pwd)"
-HOME_DIR="/d/basic-style-3"
+# Project root: $VIDEO_ROOT if set, else drive D: when it exists (Windows), else ~/Videos.
+if [ -z "$VIDEO_ROOT" ]; then if [ -d /d ]; then VIDEO_ROOT=/d; else VIDEO_ROOT="$HOME/Videos"; fi; fi
+HOME_DIR="$VIDEO_ROOT/basic-style-3"
+mkdir -p "$HOME_DIR"
 P="$HOME_DIR/$NAME"
 [ -e "$P" ] && { echo "$P sudah ada"; exit 1; }
 mkdir -p "$P"

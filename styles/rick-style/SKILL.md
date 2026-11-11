@@ -41,7 +41,9 @@ Jaga tampilannya persis seperti referensi. Variasi datang dari cerita, set, dan 
 
 ## Alur kerja
 
-`SKILL` = folder skill ini. Proyek ada di `D:\rick-style\<nama>`. Jalankan dari folder proyek.
+- **Cek tool dulu** kalau ini video pertama di komputer ini atau ada error "not found": jalankan `python ~/.claude/skills/basic-style/setup/doctor.py` (Windows: `py -3.12` kalau `python` tidak ada). Kalau ada yang MISSING, minta user menjalankan installer repo (`setup/install.ps1` di Windows, `setup/install.sh` di Mac/Linux) atau pasang yang kurang sesuai petunjuk di baris itu.
+
+`SKILL` = folder skill ini. Proyek ada di `D:\rick-style\<nama>` (di PC tanpa drive D: otomatis `~/Videos/rick-style/<nama>`; bisa diganti lewat env `VIDEO_ROOT`). Pakai path yang dicetak `new-video.sh`. Jalankan dari folder proyek.
 
 1. **Buat proyek**: `sh "$SKILL/scripts/new-video.sh" <nama> <9:16|16:9> "<path-vo>"` (tambah `--example` untuk sampel Smong).
 2. **Tulis `vo/script.json`** per kalimat atau klausa, id `A1`, `A2`, ...

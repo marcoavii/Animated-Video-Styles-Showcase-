@@ -6,7 +6,14 @@ const http = require('http'), fs = require('fs'), path = require('path'), { spaw
 const puppeteer = require('puppeteer-core');
 
 const ROOT = path.resolve(__dirname, '..');
-const CHROME = ['C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find(p => fs.existsSync(p));
+const CHROME = [process.env.CHROME_PATH,
+  "C:/Program Files/Google/Chrome/Application/chrome.exe", "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+  process.env.LOCALAPPDATA && process.env.LOCALAPPDATA + "/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+  "/usr/bin/google-chrome", "/usr/bin/google-chrome-stable", "/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/microsoft-edge"]
+  .find((p) => p && fs.existsSync(p));
+if (!CHROME) throw new Error("Chrome or Edge not found. Install Google Chrome, or set CHROME_PATH to chrome.exe / msedge.exe.");
 const args = process.argv.slice(2);
 const opt = k => { const i = args.indexOf('--' + k); return i < 0 ? null : (args[i + 1] && !args[i + 1].startsWith('--') ? args[i + 1] : true); };
 const proj = fs.existsSync(path.join(ROOT, 'project.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'project.json'), 'utf8')) : {};

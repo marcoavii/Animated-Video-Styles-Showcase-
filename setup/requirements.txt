@@ -1,0 +1,8 @@
+# Python packages for every style in this repo.
+# Python 3.10-3.13 (3.12 recommended). av is pinned: newer av breaks faster-whisper's audio decoding.
+numpy
+scipy
+pillow
+edge-tts
+faster-whisper
+av==14.2.0

@@ -14,27 +14,54 @@ pilih gayanya. Repo ini juga berisi skill lain yang dipasang terpisah: **Basic s
 | **2D Vintage Character** | Karakter kartun 2D kepala kacang bergaris ungu tebal-tipis di dunia 3D berwarna yang dicat tangan, kamera meluncur halus, preset cahaya pagi/senja/malam | 9:16 / 16:9, 30 FPS |
 | **jkson what if style** | animasi kartun stick-figure "What If" (Remotion + ElevenLabs) | 9:16 / 16:9, 60 FPS |
 
-## Pasang
+## Pasang (sekali per komputer)
+
+Satu installer memasang **semua** gaya di repo ini plus semua tool yang dibutuhkan: program (Python 3.12, Node.js, ffmpeg, Git, Chrome) kalau belum ada, paket Python (numpy, scipy, Pillow, faster-whisper, av 14.2.0, edge-tts), paket Node yang dipakai renderer (three, puppeteer-core, Playwright Chromium), model suara Whisper `small`, lalu menyalin skill ke `~/.claude/skills`. Di akhir ia menjalankan pengecekan dan menulis OK / MISSING untuk setiap item.
+
+**Windows** (PowerShell):
+
+```powershell
+git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git
+powershell -ExecutionPolicy Bypass -File Animated-Video-Styles-Showcase-\setup\install.ps1
+```
+
+**Mac / Linux**:
+
+```bash
+git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git
+bash Animated-Video-Styles-Showcase-/setup/install.sh
+```
+
+Belum punya Git? Unduh ZIP dari tombol **Code → Download ZIP**, ekstrak, lalu jalankan perintah kedua dari folder hasil ekstrak.
+
+Installer bertanya dulu sebelum memasang program lewat winget (Windows) atau Homebrew (Mac); tambahkan `-Yes` / `--yes` supaya langsung jalan. Di Linux ia menuliskan perintah `apt` yang perlu kamu jalankan. Setelah selesai, **mulai chat Claude Code baru** supaya skill terbaca. Folder hasil clone boleh dihapus.
+
+| Perintah | Gunanya |
+|---|---|
+| `python setup/doctor.py` | Cek ulang apa saja yang sudah/belum terpasang |
+| `python setup/install.py --update` | Perbarui skill yang sudah terpasang (versi lama dipindah ke `~/.claude/skills-backup`) |
+| `python setup/install.py --skip-models --skip-node` | Hanya paket Python + salin skill |
+
+Skill yang terpasang: `basic-style` (Basic style 1/2/3), `basic-style-4`, `rick-style`, `2d-vintage-character`, dan `jkson-what-if-style`.
+
+<details>
+<summary>Pasang manual (tanpa installer)</summary>
 
 ```bash
 # Basic style (1 / 2 / 3) - kartun peta chibi, tinta malam, atau 3D sinematik
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git ~/.claude/skills/basic-style
 
-# Basic style 4 dan Rick Style - masing-masing skill terpisah
-git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git /tmp/styles-repo
-cp -r /tmp/styles-repo/styles/basic-style-4 ~/.claude/skills/basic-style-4
-cp -r /tmp/styles-repo/styles/rick-style ~/.claude/skills/rick-style && rm -rf /tmp/styles-repo
+# Basic style 4, Rick Style, 2D Vintage Character, jkson what if style - masing-masing skill terpisah
+cd ~/.claude/skills/basic-style/styles
+cp -r basic-style-4 rick-style 2d-vintage-character jkson-what-if-style ~/.claude/skills/
 
-# 2D Vintage Character - karakter kartun 2D di dunia 3D lukisan tangan
-git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git /tmp/styles-repo
-cp -r /tmp/styles-repo/styles/2d-vintage-character ~/.claude/skills/2d-vintage-character && rm -rf /tmp/styles-repo
-
-# jkson what if style - animasi kartun stick-figure "What If" (Remotion + ElevenLabs)
-git clone --depth 1 https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git /tmp/styles-repo
-cp -r /tmp/styles-repo/styles/jkson-what-if-style ~/.claude/skills/jkson-what-if-style && rm -rf /tmp/styles-repo
+# Paket Python (Python 3.10-3.13)
+python -m pip install -r ~/.claude/skills/basic-style/setup/requirements.txt
 ```
 
-Nama folder tujuannya harus benar: `basic-style` untuk Basic style, `basic-style-4` untuk Basic style 4, `rick-style` untuk Rick Style, `2d-vintage-character` untuk 2D Vintage Character, dan `jkson-what-if-style` untuk jkson what if style (jangan meng-clone seluruh repo langsung sebagai `jkson-what-if-style`, karena `SKILL.md` di akar repo milik Basic style). Mulai chat baru setelah memasang.
+Nama folder tujuannya harus benar: `basic-style`, `basic-style-4`, `rick-style`, `2d-vintage-character`, dan `jkson-what-if-style` (jangan meng-clone seluruh repo langsung sebagai nama gaya lain, karena `SKILL.md` di akar repo milik Basic style). Program (Node.js 18+, ffmpeg, Chrome) pasang sendiri, lalu cek dengan `python ~/.claude/skills/basic-style/setup/doctor.py`.
+
+</details>
 
 ## Cara pakai
 
@@ -63,6 +90,7 @@ Basic style 1-4 dan Rick Style tidak pernah membuat voice over sendiri. 2D Vinta
 | Lokasi | Isi |
 |---|---|
 | `SKILL.md` | Pemilih gaya, dibaca Claude pertama kali |
+| `setup/` | Installer (`install.ps1`, `install.sh`, `install.py`), pengecek `doctor.py`, `requirements.txt` |
 | `styles/basic-style-1/` | Engine Canvas peta, scripts, templates, 6 contoh video |
 | `styles/basic-style-2/` | Kit Canvas + audio sintesis, templates, contoh "Taman Iblis" |
 | `styles/basic-style-3/` | Kit three.js + audio sintesis, templates, contoh "Penjaga Mercusuar" |
@@ -74,13 +102,17 @@ Setiap gaya punya `STYLE.md` (alur kerja lengkap) dan `references/` sendiri. Kod
 
 ## Kebutuhan
 
-- Python 3.12 dengan numpy, scipy, Pillow, faster-whisper. Pakai `av==14.2.0` (av yang lebih baru merusak faster-whisper).
-- ffmpeg dan ffprobe di PATH
-- Node.js
-- Chrome atau Edge
-- Internet saat render Basic style 1 (data peta, font, dan encoder diunduh)
+Semuanya dipasang oleh installer di atas:
 
-Proyek dibuat di `D:\basic-style-2\<nama>`, `D:\basic-style-3\<nama>`, `D:\basic-style-4\<nama>`, `D:\rick-style\<nama>`, dan `D:\2d-vintage-character\<nama>`. Basic style 1 memakai folder kerja sementara. Semua hasil disalin ke Desktop. Path Python ditulis untuk Windows, jadi sesuaikan kalau beda.
+- Python 3.10-3.13 (disarankan 3.12) dengan numpy, scipy, Pillow, edge-tts, faster-whisper, dan `av==14.2.0` (av yang lebih baru merusak faster-whisper)
+- ffmpeg dan ffprobe di PATH
+- Node.js 18+
+- Chrome atau Edge (bisa diarahkan lewat env `CHROME_PATH`)
+- Git (di Windows sekalian Git Bash, dipakai skrip `new-video.sh`)
+- Internet saat render Basic style 1 (data peta, font, dan encoder diunduh) dan saat transkrip pertama (model Whisper)
+- Khusus jkson what if style: `ELEVENLABS_API_KEY`
+
+Proyek dibuat di `D:\basic-style-2\<nama>`, `D:\basic-style-3\<nama>`, `D:\basic-style-4\<nama>`, dan `D:\rick-style\<nama>`. Di komputer tanpa drive D: otomatis pindah ke `~/Videos/<gaya>/<nama>`, atau atur sendiri lewat env `VIDEO_ROOT`. Basic style 1 memakai folder kerja sementara, 2D Vintage Character membuat folder proyek di folder kerja. Semua hasil disalin ke Desktop.
 
 Video MP4, file VO, dan audio tidak disimpan di repo ini.
 

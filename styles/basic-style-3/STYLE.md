@@ -39,7 +39,7 @@ User sudah menyukai visual dan seluruh gaya ini. Jaga tampilannya; variasi datan
 
 ## Alur kerja
 
-`SKILL` = folder skill ini. Semua proyek ada di `D:\basic-style-3\<nama>`, di luar OneDrive. Jalankan dari folder proyek.
+`SKILL` = folder skill ini. Semua proyek ada di `D:\basic-style-3\<nama>`, di luar OneDrive (di PC tanpa drive D: otomatis `~/Videos/basic-style-3/<nama>`; bisa diganti lewat env `VIDEO_ROOT`). Pakai path yang dicetak `new-video.sh`. Jalankan dari folder proyek.
 
 ### 1. Buat proyek
 ```bash

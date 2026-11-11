@@ -37,7 +37,7 @@ Kalau salah satu tidak ada, tanyakan. Sebelum menyusun audio, pastikan VO hanya 
 
 ## Alur kerja
 
-Jalankan perintah lewat Bash. `SKILL` = folder skill ini. Semua proyek ada di `D:\basic-style-2\<nama>`, di luar OneDrive.
+Jalankan perintah lewat Bash. `SKILL` = folder skill ini. Semua proyek ada di `D:\basic-style-2\<nama>`, di luar OneDrive (di PC tanpa drive D: otomatis `~/Videos/basic-style-2/<nama>`; bisa diganti lewat env `VIDEO_ROOT`). Pakai path yang dicetak `new-video.sh`.
 
 ### 1. Buat proyek
 ```bash
@@ -54,7 +54,7 @@ Satu entri `phrases` = satu kemunculan caption, biasanya satu klausa pendek.
 
 ### 3. Selaraskan VO
 ```bash
-cd /d/basic-style-2/<nama-video> && PYTHONIOENCODING=utf-8 python tools/align_vo.py audio/vo_source.mp3
+cd <folder-proyek> && PYTHONIOENCODING=utf-8 python tools/align_vo.py audio/vo_source.mp3
 ```
 Tool ini menempelkan waktu Whisper ke kata-kata di `script.json`, jadi ejaan selalu dari script. Baca daftar kata yang ditandai, terutama nama diri dan angka. Kalau muncul peringatan VO berbeda dari script, ikuti ucapan VO, perbaiki `script.json`, jalankan lagi, dan laporkan ke user.
 

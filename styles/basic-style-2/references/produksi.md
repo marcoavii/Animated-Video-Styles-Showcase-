@@ -6,7 +6,7 @@ Masalah yang benar-benar terjadi saat membangun skill ini.
 
 Dicek 2026-11-10: Node.js 24.18.0, npm 11.16, git 2.55. Python 3.12.10: numpy 2.5.4, scipy 1.18.1, Pillow 13.0.0, faster-whisper 1.2.1. `av` harus 14.2.0 (`--only-binary=:all:`), karena av 19 merusak faster-whisper.
 - ffmpeg/ffprobe 9.0.2 ada di PATH. Kalau tidak terbaca, segarkan PATH dari registry atau mulai shell baru.
-- Chrome atau Edge dipakai `puppeteer-core`. Driver dipasang sekali di `D:\basic-style-2\node_modules` dan dipakai semua proyek.
+- Chrome atau Edge dipakai `puppeteer-core`. Driver dipasang sekali di `D:\basic-style-2\node_modules` (atau `<VIDEO_ROOT>/basic-style-2/node_modules`) dan dipakai semua proyek.
 - Whisper model `small` terunduh saat pertama dipakai. Koneksi lambat, jadi siapkan waktu.
 
 ## Visual
