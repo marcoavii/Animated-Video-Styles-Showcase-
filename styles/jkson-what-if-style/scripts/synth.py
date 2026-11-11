@@ -268,10 +268,17 @@ def r_power_down(secs, rng):
 
 
 def r_rewind(secs, rng):
+    """A tape spooling back: a low, soft whirr that speeds up a little. Kept under 1.5 kHz so it never squeals."""
     n = int(secs * SR)
-    wob = 1 + 0.25 * np.sin(2 * np.pi * 7 * T(secs)[:n])
-    x = tone(glide(1400, 2600, secs) * wob, secs, 'saw') * 0.3 + bp(noise(n, rng), 1500, 6000) * 0.4
-    return lp(x, 6000) * bell_env(n, 0.3, 1.0)
+    t = T(secs)[:n]
+    flutter = 1 + 0.03 * np.sin(2 * np.pi * 16 * t)
+    f = glide(170, 340, secs) * flutter
+    whirr = tone(f, secs, 'tri') * 0.6 + tone(f * 2, secs) * 0.2
+    hiss = bp(noise(n, rng, 'pink'), 300, 1400) * (0.75 + 0.25 * np.sin(2 * np.pi * 16 * t)) * 0.5
+    motor = lp(noise(n, rng, 'brown'), 160) * 0.35
+    x = lp(whirr + hiss + motor, 1500, 4)
+    e = np.minimum(1, t / 0.06) * np.minimum(1, (secs - t) / 0.15)
+    return x * np.clip(e, 0, 1) * np.linspace(0.75, 1, n)
 
 
 def r_shatter(secs, rng):
@@ -459,6 +466,7 @@ RECIPES = [
     ('drone', ('drone', 'ominous', 'sting', 'horror')),
     ('power_down', ('power-down', 'power down', 'losing power', 'whine dropping', 'shutting down')),
     ('hum', ('power grid hum', 'electrical hum', 'transformer*', 'power hum')),
+    ('reverse', ('sucked backwards', 'reverse', 'backwards swoosh')),
     ('rewind', ('rewind*', 'vhs', 'tape')),
     ('ratchet', ('spinning backwards', 'ratchet', 'clock ticking very fast')),
     ('ticks', ('counter', 'ticking', 'digits rolling')),
@@ -489,7 +497,6 @@ RECIPES = [
     ('step', ('footstep*', 'step', 'steps')),
     ('thud', ('thud*', 'land*', 'slap*', 'catch*', 'bump*', 'drop*', 'impact')),
     ('boom', ('boom*', 'explosion', 'blast')),
-    ('reverse', ('sucked backwards', 'reverse', 'backwards swoosh')),
     ('wind', ('wind', 'breeze', 'rooftop', 'outdoor*')),
     ('room', ('room tone', 'ambience', 'ambient', 'hum', 'city')),
     ('pop', ('pop*', 'bubble', 'appear*', 'poof')),
