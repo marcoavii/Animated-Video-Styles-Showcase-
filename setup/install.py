@@ -32,6 +32,7 @@ SKILLS = {
     "basic-style-2": REPO / "launchers" / "basic-style-2",
     "basic-style-3": REPO / "launchers" / "basic-style-3",
     "basic-style-4": REPO / "styles" / "basic-style-4",
+    "basic-style-5": REPO / "styles" / "basic-style-5",
     # Every skill name starts with "basic" so typing /basic lists all styles together.
     "basic-rick-style": REPO / "styles" / "rick-style",
     "basic-2d-vintage-character": REPO / "styles" / "2d-vintage-character",
@@ -48,6 +49,7 @@ NODE_SHARED = {
     "basic-style-2": ["puppeteer-core"],
     "basic-style-3": ["three@0.170.0", "puppeteer-core@23.11.1"],
     "basic-style-4": ["three@0.170.0", "puppeteer-core@23.11.1"],
+    "basic-style-5": ["three@0.170.0", "puppeteer-core@23.11.1"],
     "rick-style": ["three@0.170.0", "puppeteer-core@23.11.1"],
 }
 IGNORE = shutil.ignore_patterns("node_modules", "__pycache__", "*.pyc")

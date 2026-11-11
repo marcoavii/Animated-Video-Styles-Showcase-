@@ -1,0 +1,15 @@
+{
+ "slug": "basic-style-5",
+ "title": "Basic style 5",
+ "fps": 30,
+ "ratios": [
+  "9:16",
+  "16:9"
+ ],
+ "reference": "<VIDEO_ROOT>/basic-style-5/_reference/reference.mp4",
+ "analysis": "<VIDEO_ROOT>/basic-style-5/_reference",
+ "reference_frames": "<VIDEO_ROOT>/basic-style-5/_reference/frames",
+ "caption_font": "Montserrat_wght_.ttf",
+ "created": "2026-11-11",
+ "video_root": "D: kalau ada, kalau tidak ~/Videos (atau env VIDEO_ROOT)"
+}

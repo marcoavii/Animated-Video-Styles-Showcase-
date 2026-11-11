@@ -1,0 +1,8 @@
+[{"ref_t": 3.0, "out_frame": "f000.png", "label": "medium samping, tepi kolam"},
+ {"ref_t": 6.0, "out_frame": "f001.png", "label": "wide tinggi, dua kolam"},
+ {"ref_t": 10.2, "out_frame": "f002.png", "label": "close-up frontal, kaget"},
+ {"ref_t": 13.2, "out_frame": "f003.png", "label": "extreme close-up 3/4"},
+ {"ref_t": 19.5, "out_frame": "f004.png", "label": "kolam air biru"},
+ {"ref_t": 26.6, "out_frame": "f005.png", "label": "medium low angle, tangan terbuka"},
+ {"ref_t": 35.0, "out_frame": "f006.png", "label": "bawah air"},
+ {"ref_t": 30.5, "out_frame": "f007.png", "label": "karung + papan angka"}]

@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Basic style 5</title>
+<link rel="icon" href="data:,">
+<script type="importmap">
+{ "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }
+</script>
+<script>
+  // Caption behaviour measured from the reference (new_style.py seeds it; tune while comparing side by side).
+  window.CAPTION = {"maxWords": 2, "maxChars": 14, "joinShort": 4, "hold": 0.45, "fadeIn": 0.07, "fadeOut": 0.1, "fadeAlways": false, "pop": 0, "popDur": 0.12, "upper": false}; // 1 word, a short word (<= 4 letters) joins the next: "ke dalamnya.", "dan Juragan"
+</script>
+<style>
+  /* Fonts: the caption font found with fonts.py match, and a second font for signs/labels drawn on props. */
+  @font-face { font-family: "Caption"; font-weight: 100 900; src: url("./fonts/Montserrat_wght_.ttf") format("truetype"); }
+  @font-face { font-family: "UI"; font-weight: 100 900; src: url("./fonts/Montserrat_wght_.ttf") format("truetype"); }
+  html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: var(--w); height: var(--h); overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; }
+  /* Basic style 5 caption, measured from the reference:
+     centre at 50.0% x 70.1% of the frame, glyph block 5.16% of the height, fill #fbfbfa, outline #231900. */
+  #cap {
+    position: absolute; left: 50.0%; top: 70.1%; transform: translate(-50%, -50%); text-align: center; white-space: nowrap;
+    font-family: "Caption"; font-weight: 800; text-transform: none;
+    font-size: calc(var(--h) * 0.0387); letter-spacing: -0.01em; line-height: 1;
+    color: #fbfbfa; -webkit-text-stroke: calc(var(--h) * 0.0024) #231900; paint-order: stroke fill;
+    text-shadow: 0 calc(var(--h) * 0.0025) calc(var(--h) * 0.005) rgba(0,0,0,.55);
+  }
+  #cap.hi { color: #f6d54e; }
+  /* the other ratio: same rules; sizes are tied to the height, so check them side by side and adjust here */
+  .land #cap { top: 78%; font-size: calc(var(--h) * 0.057); }
+</style>
+</head>
+<body>
+  <div id="stage"><canvas id="gl"></canvas><div id="cap"></div></div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

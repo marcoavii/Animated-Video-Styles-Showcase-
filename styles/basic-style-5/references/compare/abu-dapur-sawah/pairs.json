@@ -1,0 +1,4 @@
+[{"ref_t": 3.0, "out_t": 1.4, "label": "medium, tokoh menebar di tepi petak"},
+ {"ref_t": 2.25, "out_t": 4.2, "label": "tokoh teal dekat kamera, petak di belakang"},
+ {"ref_t": 6.0, "out_t": 6.5, "label": "wide dua petak dipisah jalan"},
+ {"ref_t": 26.6, "out_t": 8.7, "label": "medium sudut rendah, tangan merentang"}]
