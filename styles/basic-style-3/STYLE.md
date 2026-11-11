@@ -91,4 +91,4 @@ Sampaikan ke user: lokasi file, spesifikasi, hasil ukur mix, kata yang perlu dic
 ## Prinsip
 
 - **Tiru gaya, bukan isi.** Setiap video punya gag dan komposisi sendiri mengikuti brief. Jangan memakai ulang lelucon mercusuar kecuali diminta.
-- **Gaya ini terpisah.** Jangan mencampur kode dengan `basic-style-1`, `basic-style-2`, atau `cartoon-3d-short`.
+- **Gaya ini terpisah.** Jangan mencampur kode dengan `basic-style-1` atau `basic-style-2`.

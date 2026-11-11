@@ -102,4 +102,4 @@ Cek dengan ffprobe (resolusi, 60 FPS, ada audio), decode seluruh file dengan `ff
 ## Prinsip
 
 - **Tiru gaya, bukan isi.** Setiap video punya gag dan komposisi sendiri mengikuti brief. Jangan memakai ulang lelucon Taman Iblis kecuali diminta.
-- **Gaya ini terpisah.** Jangan mencampur kode dengan `basic-style-1` atau `cartoon-3d-short`.
+- **Gaya ini terpisah.** Jangan mencampur kode dengan `basic-style-1` atau `basic-style-3`.
