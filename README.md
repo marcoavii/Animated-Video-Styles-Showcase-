@@ -66,7 +66,7 @@ Tidak perlu API key apa pun: semua gaya memakai VO yang kamu buat sendiri di Ele
 | `python setup/install.py --update` | Perbarui skill yang sudah terpasang (versi lama dipindah ke `~/.claude/skills-backup`) |
 | `python setup/install.py --skip-models --skip-node` | Hanya paket Python + salin skill |
 
-Skill yang terpasang: `basic-style` (Basic style 1/2/3), `basic-style-4`, `rick-style`, `2d-vintage-character`, dan `jkson-what-if-style`.
+Skill yang terpasang (semuanya diawali `basic`, jadi ketik `/basic` untuk melihat semua gaya): `basic-style` (pilih Basic style 1/2/3), `basic-style-1`, `basic-style-2`, `basic-style-3` (pintasan langsung ke gaya itu), `basic-style-4`, `basic-rick-style`, `basic-2d-vintage-character`, dan `basic-jkson-what-if-style`.
 
 <details>
 <summary>Pasang manual (tanpa installer)</summary>
@@ -76,14 +76,17 @@ Skill yang terpasang: `basic-style` (Basic style 1/2/3), `basic-style-4`, `rick-
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git ~/.claude/skills/basic-style
 
 # Basic style 4, Rick Style, 2D Vintage Character, jkson what if style - masing-masing skill terpisah
-cd ~/.claude/skills/basic-style/styles
-cp -r basic-style-4 rick-style 2d-vintage-character jkson-what-if-style ~/.claude/skills/
+cd ~/.claude/skills/basic-style
+cp -r launchers/basic-style-1 launchers/basic-style-2 launchers/basic-style-3 styles/basic-style-4 ~/.claude/skills/
+cp -r styles/rick-style ~/.claude/skills/basic-rick-style
+cp -r styles/2d-vintage-character ~/.claude/skills/basic-2d-vintage-character
+cp -r styles/jkson-what-if-style ~/.claude/skills/basic-jkson-what-if-style
 
 # Paket Python (Python 3.10-3.13)
 python -m pip install -r ~/.claude/skills/basic-style/setup/requirements.txt
 ```
 
-Nama folder tujuannya harus benar: `basic-style`, `basic-style-4`, `rick-style`, `2d-vintage-character`, dan `jkson-what-if-style` (jangan meng-clone seluruh repo langsung sebagai nama gaya lain, karena `SKILL.md` di akar repo milik Basic style). Program (Node.js 18+, ffmpeg, Chrome) pasang sendiri, lalu cek dengan `python ~/.claude/skills/basic-style/setup/doctor.py`.
+Nama folder tujuannya harus benar: `basic-style`, `basic-style-1`, `basic-style-2`, `basic-style-3`, `basic-style-4`, `basic-rick-style`, `basic-2d-vintage-character`, dan `basic-jkson-what-if-style` (jangan meng-clone seluruh repo langsung sebagai nama gaya lain, karena `SKILL.md` di akar repo milik Basic style). Program (Node.js 18+, ffmpeg, Chrome) pasang sendiri, lalu cek dengan `python ~/.claude/skills/basic-style/setup/doctor.py`.
 
 </details>
 
@@ -152,7 +155,7 @@ Berasal dari plugin "2D Vintage Animation" oleh Lumenstick Studio (MIT, lihat `s
 
 ## jkson what if style (What If animation)
 
-Dulu bernama **jkson style**; namanya diganti menjadi **jkson what if style** (folder `jkson-what-if-style`). Nama lama tetap memicu skill ini.
+Dulu bernama **jkson style**; namanya diganti menjadi **jkson what if style** (folder `styles/jkson-what-if-style`, terpasang sebagai skill `basic-jkson-what-if-style`). Nama lama tetap memicu skill ini.
 
 Skill kedua di repo ini: animasi kartun stick-figure gaya channel "What If" yang meledak di YouTube Oktober 2026.
 Satu baris topik ("What if you could rewind 10 seconds?") masuk, episode jadi 15-25 detik keluar: script di atas
@@ -165,8 +168,8 @@ sebagai SVG yang dirender Remotion, efek suara dan musik disintesis offline (tan
 
 ```bash
 git clone https://github.com/marcoavii/Animated-Video-Styles-Showcase-.git
-cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.config/opencode/skills/jkson-what-if-style   # OpenCode
-cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.claude/skills/jkson-what-if-style            # Claude Code
+cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.config/opencode/skills/basic-jkson-what-if-style   # OpenCode
+cp -r Animated-Video-Styles-Showcase-/styles/jkson-what-if-style ~/.claude/skills/basic-jkson-what-if-style            # Claude Code
 ```
 
 - **Pakai**: tulis "jkson what if style 16:9" (atau 9:16) lalu kirim VO + script-nya, atau "jkson what if style: what if ..." kalau baru punya topik

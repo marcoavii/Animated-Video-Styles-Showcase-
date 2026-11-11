@@ -126,7 +126,8 @@ check("Whisper model 'small'", has_small, "cached",
       "downloads by itself on the first transcription (about 480 MB)", required=False)
 
 # Installed skills
-for name in ["basic-style", "basic-style-4", "rick-style", "2d-vintage-character", "jkson-what-if-style"]:
+for name in ["basic-style", "basic-style-1", "basic-style-2", "basic-style-3", "basic-style-4",
+             "basic-rick-style", "basic-2d-vintage-character", "basic-jkson-what-if-style"]:
     check(f"skill: {name}", (SKILLS / name / "SKILL.md").is_file(), str(SKILLS / name),
           "python setup/install.py   (copies every style into ~/.claude/skills)", required=False)
 

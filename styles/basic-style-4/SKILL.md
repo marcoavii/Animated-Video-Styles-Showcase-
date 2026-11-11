@@ -1,6 +1,6 @@
 ---
 name: basic-style-4
-description: "Basic style 4: bikin video cerita twist pendek dengan gaya referensi 'Ref 5' (lap kuning kos putra): karakter kartun 2D vektor seperti stiker (kepala besar, outline hitam tebal + glow krem, wajah digambar, badan balok, tangan tabung) yang ditaruh di set 3D bersih dan kalem, hard cut tiap klausa sekitar 1-2 detik, shot frontal setinggi mata dengan dorongan pelan, insert besar tangan + benda, caption 1-2 kata Montserrat ExtraBold putih dengan kata kunci kuning, musik tipis + SFX sintesis, 60 FPS, 9:16 atau 16:9, dari VO ElevenLabs + script + brief visual milik user. Pakai skill ini setiap kali user menulis 'Basic style 4', 'Basic style 4 9:16', 'Basic style 4 16:9', 'style 4', 'gaya Ref 5', 'gaya lap kuning/kos', atau minta video dengan karakter stiker 2D di ruangan 3D. Bukan untuk Basic style 1/2/3 (skill basic-style), Marc AHO, atau Rick Style (skill rick-style)."
+description: "Basic style 4: bikin video cerita twist pendek dengan gaya referensi 'Ref 5' (lap kuning kos putra): karakter kartun 2D vektor seperti stiker (kepala besar, outline hitam tebal + glow krem, wajah digambar, badan balok, tangan tabung) yang ditaruh di set 3D bersih dan kalem, hard cut tiap klausa sekitar 1-2 detik, shot frontal setinggi mata dengan dorongan pelan, insert besar tangan + benda, caption 1-2 kata Montserrat ExtraBold putih dengan kata kunci kuning, musik tipis + SFX sintesis, 60 FPS, 9:16 atau 16:9, dari VO ElevenLabs + script + brief visual milik user. Pakai skill ini setiap kali user menulis 'Basic style 4', 'Basic style 4 9:16', 'Basic style 4 16:9', 'style 4', 'gaya Ref 5', 'gaya lap kuning/kos', atau minta video dengan karakter stiker 2D di ruangan 3D. Bukan untuk Basic style 1/2/3 (skill basic-style), Marc AHO, atau Rick Style (skill basic-rick-style)."
 ---
 
 # Basic style 4
@@ -26,7 +26,7 @@ Kalau rasio tidak disebut, tanya dulu. Kalau user minta keduanya, susun satu kal
 
 Sebelum menyusun audio, pastikan VO hanya berisi suara.
 
-Jaga tampilannya persis seperti referensi. Variasi datang dari cerita, set, dan gag, bukan dari mengubah gaya. Jangan mencampur kode dengan basic-style, rick-style, atau marc-aho.
+Jaga tampilannya persis seperti referensi. Variasi datang dari cerita, set, dan gag, bukan dari mengubah gaya. Jangan mencampur kode dengan basic-style, basic-rick-style, atau marc-aho.
 
 ## Isi skill
 

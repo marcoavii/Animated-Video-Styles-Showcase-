@@ -4,8 +4,9 @@
 
 1. Python packages from setup/requirements.txt
 2. Copies the skills into ~/.claude/skills:
-     basic-style (this whole repo: Basic style 1/2/3 + the picker), basic-style-4, rick-style,
-     2d-vintage-character, jkson-what-if-style
+     basic-style (this whole repo: Basic style 1/2/3 + the picker), basic-style-1/2/3 (shortcuts), basic-style-4,
+     basic-rick-style, basic-2d-vintage-character, basic-jkson-what-if-style
+   Copies left under the old names (rick-style, 2d-vintage-character, jkson-what-if-style) move to ~/.claude/skills-backup.
    A skill that already exists is left alone; --update pulls it (git) or replaces it (old copy moved to ~/.claude/skills-backup).
 3. Node packages the render scripts share (three, puppeteer-core) in the project folders, and Playwright Chromium
 4. The Whisper 'small' speech model (about 480 MB), so the first transcription does not stall
@@ -26,10 +27,21 @@ REPO = Path(__file__).resolve().parent.parent
 WIN = os.name == "nt"
 SKILLS = {
     "basic-style": REPO,
+    # Thin shortcuts so /basic-style-1, -2, -3 show up in the slash menu; they read the styles inside basic-style.
+    "basic-style-1": REPO / "launchers" / "basic-style-1",
+    "basic-style-2": REPO / "launchers" / "basic-style-2",
+    "basic-style-3": REPO / "launchers" / "basic-style-3",
     "basic-style-4": REPO / "styles" / "basic-style-4",
-    "rick-style": REPO / "styles" / "rick-style",
-    "2d-vintage-character": REPO / "styles" / "2d-vintage-character",
-    "jkson-what-if-style": REPO / "styles" / "jkson-what-if-style",
+    # Every skill name starts with "basic" so typing /basic lists all styles together.
+    "basic-rick-style": REPO / "styles" / "rick-style",
+    "basic-2d-vintage-character": REPO / "styles" / "2d-vintage-character",
+    "basic-jkson-what-if-style": REPO / "styles" / "jkson-what-if-style",
+}
+# Folder names used before the "basic-" prefix; an old copy is moved to skills-backup so it is not loaded twice.
+OLD_NAMES = {
+    "rick-style": "basic-rick-style",
+    "2d-vintage-character": "basic-2d-vintage-character",
+    "jkson-what-if-style": "basic-jkson-what-if-style",
 }
 # Shared node_modules that each style's new-video.sh would otherwise install on its first project.
 NODE_SHARED = {
@@ -103,6 +115,12 @@ def main():
     step(f"Skills -> {a.skills_dir}")
     dst_dir = Path(a.skills_dir).expanduser()
     dst_dir.mkdir(parents=True, exist_ok=True)
+    for old, new in OLD_NAMES.items():
+        if (dst_dir / old / "SKILL.md").is_file():
+            bak = dst_dir.parent / "skills-backup" / f"{old}-{time.strftime('%Y%m%d-%H%M%S')}"
+            bak.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(dst_dir / old), str(bak))
+            print(f"  {old}: renamed to {new}; old copy moved to {bak}")
     for name, src in SKILLS.items():
         install_skill(name, src, dst_dir, a.update)
 

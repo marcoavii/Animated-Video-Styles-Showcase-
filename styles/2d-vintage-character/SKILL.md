@@ -1,5 +1,5 @@
 ---
-name: 2d-vintage-character
+name: basic-2d-vintage-character
 description: 2D Vintage Character. Use when the user writes "2D Vintage Character", "2D Vintage Character 9:16", "2D Vintage Character 16:9", "gaya 2D vintage", or wants a "2D vintage animation", "vintage cartoon", "old cartoon style" or "cartoon short" from a voiceover, a script, or just an idea, e.g. "make a 2D vintage animation from this voiceover", "turn my script into a cartoon short", "give me cartoon video ideas". Builds flat 2D cartoon characters in a colourful hand-painted 3D world (three.js) with ink outlines, gliding cameras, music, SFX, captions, two thumbnails and post text. 9:16 by default, 16:9 on request. Not for Basic style 1-4, Rick Style, Marc AHO or jkson what if style.
 ---
 

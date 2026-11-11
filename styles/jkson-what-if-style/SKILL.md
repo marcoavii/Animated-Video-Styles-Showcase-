@@ -1,5 +1,5 @@
 ---
-name: jkson-what-if-style
+name: basic-jkson-what-if-style
 description: jkson what if style. Make a "What If" animated episode from one topic line ("What if you could rewind 10 seconds?"), in the dusk-lit stick-figure style of the What If channels that broke out on YouTube in October 2026. Takes the person's own voiceover (an mp3 they made in ElevenLabs and uploaded) with its script, or writes the script on the seven-beat What If formula for them to record, times every word with Whisper, lays out a shot list at the genre's pace, renders a storyboard of stills and self-checks it before animating, animates every frame in code (Remotion and SVG, with an original cast on one rig, rooms in perspective and light from lamps and windows), synthesizes and syncs the sound offline (no API key needed), and masters a finished 15-25 s episode to -14 LUFS. Use when someone asks for a What If episode, animation or cartoon, "make a what if video about X", a stick-figure explainer in this style, to run the free What If skill, or writes "jkson what if style", "jkson what if", the old name "jkson style", "Jackson style", "gaya jkson", or "jkson".
 ---
 

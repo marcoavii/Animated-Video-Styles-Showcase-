@@ -1,5 +1,5 @@
 ---
-name: rick-style
+name: basic-rick-style
 description: "Rick Style: bikin video cerita twist pendek dengan gaya referensi 'Rick Style' (Ricks Clips, rel kereta di ngarai): karakter 2D bergaris tinta tangan (kepala bulat putih, wajah titik-garis sederhana, badan bean, kaki dan tangan lidi, topi garis-garis/bowler/peci) sebagai billboard di dunia 3D yang sangat jenuh dan hangat (langit biru pekat, awan besar, ngarai oranye-ungu, bloom), kamera yang terbang (FPV dengan motion blur, crane, sudut rendah), sambungan dissolve lembut, emote (uap marah, keringat), caption 1-2 kata Montserrat Black putih bertepi hitam tanpa highlight, musik + SFX sintesis, 60 FPS, 9:16 atau 16:9, dari VO ElevenLabs + script + brief visual milik user. Pakai skill ini setiap kali user menulis 'Rick Style', 'Rick style 9:16', 'Rick style 16:9', 'gaya Rick', 'gaya Ricks Clips', 'gaya rel kereta/ngarai', atau minta karakter kepala putih kaki lidi di dunia 3D berwarna. Bukan untuk Basic style 1-4 atau Marc AHO."
 ---
 
